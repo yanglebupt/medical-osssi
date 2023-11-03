@@ -1,0 +1,7 @@
+torch==1.11.0+cu113
+argparse==1.1
+pandas
+openpyxl
+scikit-learn
+PyYAML==5.1
+torchvision==0.12.0+cu113

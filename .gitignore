@@ -1,0 +1,5 @@
+output/**
+**/.ipynb_checkpoints
+**/__pycache__
+show_xlsx.ipynb
+data/training0925.xlsx

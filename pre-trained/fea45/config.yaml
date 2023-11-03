@@ -1,0 +1,25 @@
+rates:
+  - rate_8_2
+  - rate_7_3
+
+models:
+  - name: nnet
+    path: res_ann
+    epoches:
+      - 150
+      - 300
+      - 500
+
+  - name: annet
+    path: ann_dropout_before
+    epoches:
+      - 150
+      - 300
+      - 500
+
+  - name: annet_2
+    path: ann_norm
+    epoches:
+      - 150
+      - 300
+      - 500
