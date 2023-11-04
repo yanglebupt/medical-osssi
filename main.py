@@ -65,72 +65,84 @@ if __name__ == "__main__":
   fae_all_dataloader = DataLoader(fea_all_dataset, batch_size=10, shuffle=True)
 
   # 16个特征
-  if False:
-    print("使用16个特征")
-    fea_1, fea_2 = get_fea16(all_features)
-    all_selected_features = np.concatenate([fea_1,fea_2],axis=1)
-    maxvalues_selected = np.max(np.abs(all_selected_features),axis=0)
-    maxvalues_selected_default = np.loadtxt(FEA_16 + "max_value.txt")
+  print("使用16个特征")
+  fea_1, fea_2 = get_fea16(all_features)
+  all_selected_features = np.concatenate([fea_1,fea_2],axis=1)
+  maxvalues_selected = np.max(np.abs(all_selected_features),axis=0)
+  maxvalues_selected_default = np.loadtxt(FEA_16 + "max_value.txt")
 
-    maxvalues_selected_merge = np.max(
-      np.concatenate([maxvalues_selected.reshape((1,-1)),maxvalues_selected_default.reshape((1,-1))],axis=0),
-      axis=0
-    )
+  maxvalues_selected_merge = np.max(
+    np.concatenate([maxvalues_selected.reshape((1,-1)),maxvalues_selected_default.reshape((1,-1))],axis=0),
+    axis=0
+  )
 
-    fea_16_dataset = MyDataset(all_selected_features, all_labels, maxvalues_selected_merge)
-    fae_16_dataloader = DataLoader(fea_16_dataset, batch_size=10, shuffle=True)
+  fea_16_dataset = MyDataset(all_selected_features, all_labels, maxvalues_selected_merge)
+  fae_16_dataloader = DataLoader(fea_16_dataset, batch_size=10, shuffle=True)
 
   torch.set_default_tensor_type(torch.FloatTensor)
 
-  # 开始预测
-  fea_path = FEA_ALL
-  fea_dataloader = fae_all_dataloader
-  out_path = OUTPUT_ALL
-  epoches_list = EPOCHES_ALL
-  make_dir(out_path)
-  with open(os.path.join(fea_path,"config.yaml"),"r") as f:
-      config = yaml.safe_load(f)
-  config = dict2namespace(config)
-  for rate_path in config.rates:      
-      pd_names = []
-      all_epoch_results = np.empty((3,len(epoches_list)), dtype=object)
-      all_epoch_results.fill("")
-      for i, model_config in enumerate(config.models):  # 遍历模型
-        model_config = dict2namespace(model_config)
-        folder = os.path.join(fea_path, rate_path, model_config.path)
-        model_epoch_filenames = filter_model_filename(os.listdir(folder), epoches_list)
-        epoches = model_config.epoches
-        pd_names.append(model_config.name)
-        for j, model_filename_list in enumerate(model_epoch_filenames): # 遍历epoch
-          score_roc_auc_list = []
-          for model_filename in model_filename_list:
-            model = create_model_by_name(model_config.name)
-            checkpoint = torch.load(os.path.join(folder, model_filename))
-            model.load_state_dict(checkpoint["model"])
-            model = model.eval()
-            error, scores, labels = test_proba(device, fea_dataloader, model, loss_fn)
-            print(f"train_test_rate: {rate_path}, pre-trained_model_path: {model_config.path}, model_eopch: {model_filename}, error: {error}")
-            scores_one = scores[:,1]
-            score_roc_auc = roc_auc_score(labels, scores_one)
-            score_roc_auc_list.append(score_roc_auc)
+  for i in range(2):
+      # 开始预测
+      fea_path = FEA_ALL if i==0 else FEA_16
+      fea_dataloader = fae_all_dataloader if i==0 else fae_16_dataloader
+      out_path = OUTPUT_ALL if i==0 else OUTPUT_16
+      create_model_by_name = create_fea45_model_by_name if i==0 else create_fea16_model_by_name
+      epoches_list = EPOCHES_ALL
+      make_dir(out_path)
+      with open(os.path.join(fea_path,"config.yaml"),"r") as f:
+          config = yaml.safe_load(f)
+      config = dict2namespace(config)
+      for rate_path in config.rates:      
+        pd_names = []
+        model_config = config.models.__dict__
+        if rate_path not in model_config and "common" in model_config:
+          rate_model_config = model_config["common"]
+        elif rate_path in model_config and "common" in model_config:
+          rate_model_config =  model_config[rate_path] + model_config["common"]
+        elif rate_path in model_config and "common" not in model_config:
+          rate_model_config =  model_config[rate_path]
+        else:
+           continue
+        all_epoch_results = np.empty((len(rate_model_config), len(epoches_list)), dtype=object)
+        all_epoch_results.fill("")
 
-          all_epoch_results[i,j] = np.array(score_roc_auc_list).mean()
-          # str_list = [str(s) for s in score_roc_auc_list]
-          # all_epoch_results[i,j] = ",".join(str_list)
+        for i, model_config in enumerate(rate_model_config):  # 遍历模型
+          model_config = dict2namespace(model_config)
+          folder = os.path.join(fea_path, rate_path, model_config.path)
+          model_epoch_filenames = filter_model_filename(os.listdir(folder), epoches_list)
+          pd_names.append(model_config.name)
+          for j, model_filename_list in enumerate(model_epoch_filenames): # 遍历epoch
+            score_roc_auc_list = []
+            for model_filename in model_filename_list:
+              model = create_model_by_name(model_config.name)
+              checkpoint = torch.load(os.path.join(folder, model_filename))
+              model.load_state_dict(checkpoint["model"])
+              model = model.eval()
+              conv1d = model_config.conv1d if "conv1d" in model_config else False
+              error, scores, labels = test_proba(device, fea_dataloader, model, loss_fn, conv1d=conv1d)
+              print(f"train_test_rate: {rate_path}, pre-trained_model_path: {model_config.path}, model_eopch: {model_filename}, error: {error}")
+              scores_one = scores[:,1]
+              score_roc_auc = roc_auc_score(labels, scores_one)
+              score_roc_auc_list.append(score_roc_auc)
+              c_idx = find_index_epoch_by_filename(model_filename,epoches_list)
+              
+            all_epoch_results[i,c_idx] = np.array(score_roc_auc_list).mean()
+            # str_list = [str(s) for s in score_roc_auc_list]
+            # all_epoch_results[i,j] = ",".join(str_list)
 
-      rate_results = dict(model_names=pd_names)
-      for i in range(len(epoches_list)):
-         rate_results[f"epoch_{EPOCHES_ALL[i]}"] = all_epoch_results[:,i]
+        rate_results = dict(model_names=pd_names)
+        for i in range(len(epoches_list)):
+          rate_results[f"epoch_{EPOCHES_ALL[i]}"] = all_epoch_results[:,i]
 
-      rate_sheet = pd.DataFrame(rate_results)
+        rate_sheet = pd.DataFrame(rate_results)
 
-      result_filename = f"{out_path}/results.xlsx"
-      if os.path.exists(result_filename):
-        with pd.ExcelWriter(result_filename, mode="a", if_sheet_exists="replace") as xlsx:
-          print(f"save sheet_name: {rate_path}")
-          rate_sheet.to_excel(xlsx, sheet_name=rate_path, index=False)
-      else:
-        with pd.ExcelWriter(result_filename, mode="w") as xlsx:
-          print(f"save sheet_name: {rate_path}")
-          rate_sheet.to_excel(xlsx, sheet_name=rate_path, index=False)
+        result_filename = f"{out_path}/results.xlsx"
+        if os.path.exists(result_filename):
+          with pd.ExcelWriter(result_filename, mode="a", if_sheet_exists="replace") as xlsx:
+            print(f"save sheet_name: {rate_path}")
+            rate_sheet.to_excel(xlsx, sheet_name=rate_path, index=False)
+        else:
+          with pd.ExcelWriter(result_filename, mode="w") as xlsx:
+            print(f"save sheet_name: {rate_path}")
+            rate_sheet.to_excel(xlsx, sheet_name=rate_path, index=False)
 

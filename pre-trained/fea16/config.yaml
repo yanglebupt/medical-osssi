@@ -1,0 +1,23 @@
+rates:
+  - rate_8_2
+  - rate_7_3
+
+models:
+  rate_8_2:
+    - name: annet
+      path: ann_dropout_before
+
+  rate_7_3:
+    - name: annet
+      path: ann_dropout_before
+
+    - name: annet_2
+      path: ann_norm
+    
+    - name: cnn1d_half
+      path: cnn1d_half
+      conv1d: true
+
+    - name: cnn1d_fit
+      path: cnn1d_fit
+      conv1d: true

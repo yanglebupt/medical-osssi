@@ -4,6 +4,7 @@ import torch.nn as nn
 from models.annet import ANNet
 from models.annet_2 import ANNet_2
 from models.nnet import NNet
+from models.cnn1d import CNN1d
 
 device = 'cpu'
 start_lr = 0.0001
@@ -16,7 +17,7 @@ def create_optimizer(model):
                             eps=1e-8)
     return optimizer
 
-def create_model_by_name(name):
+def create_fea45_model_by_name(name):
     if name=="nnet":
         model = NNet(ipt=45, end=2, start=128, 
                    block=5, blocksize=3, 
@@ -26,18 +27,41 @@ def create_model_by_name(name):
         model = ANNet([45,128,256,128,64,32,16,4,2]).to(device)
     elif name=="annet_2":
         model = ANNet_2([45,128,256,128,64,32,16,4,2]).to(device)
+    elif name=="cnn1d_half":
+        model = CNN1d(dropout=nn.Dropout(0), drop_block=nn.Dropout2d(0), isHalf=True).to(device)
+    elif name=="cnn1d_fit":
+        model = CNN1d(dropout=nn.Dropout(0.7), drop_block=nn.Dropout2d(0.3)).to(device)
     else:
         pass
     return model
 
+def create_fea16_model_by_name(name):
+    if name=="nnet":
+        model = NNet(ipt=16, end=2, start=128, 
+                   block=5, blocksize=3, 
+                   dropout=nn.Dropout(0.7)
+                  ).to(device)
+    elif name=="annet":
+        model = ANNet([16,128,256,128,64,32,16,4,2]).to(device)
+    elif name=="annet_2":
+        model = ANNet_2([16,128,256,128,64,32,16,4,2]).to(device)
+    elif name=="cnn1d_half":
+        model = CNN1d(dropout=nn.Dropout(0), drop_block=nn.Dropout2d(0), isHalf=True).to(device)
+    elif name=="cnn1d_fit":
+        model = CNN1d(dropout=nn.Dropout(0.7), drop_block=nn.Dropout2d(0.3)).to(device)
+    else:
+        pass
+    return model
 
-def train(device, dataloader, model, loss_fn, optimizer,isprint=False):
+def train(device, dataloader, model, loss_fn, optimizer, conv1d=False, isprint=False):
     correct=0
     error=0
     total=0
     for batch, (X, l) in enumerate(dataloader):
         l = l.long()
         n = l.shape[0]
+        if conv1d:
+            X = X.reshape((n,1,-1,1))
         X,l = X.to(device),l.to(device)
         # 前向反馈
         pred = model(X)
@@ -58,7 +82,7 @@ def train(device, dataloader, model, loss_fn, optimizer,isprint=False):
             print(str(n)+"中的正确个数:"+str((p == l).sum().cpu()))
     return error/(batch+1),correct/total
 
-def test(device,dataloader,model,loss_fn,isprint=False):
+def test(device,dataloader,model,loss_fn, conv1d=False, isprint=False):
     correct=0
     error=0
     total=0
@@ -66,6 +90,8 @@ def test(device,dataloader,model,loss_fn,isprint=False):
     for batch,(X,l) in enumerate(dataloader):
         l = l.long()
         n = l.shape[0]
+        if conv1d:
+            X = X.reshape((n,1,-1,1))
         # 将数据传送至设备里
         X,l = X.to(device),l.to(device)
         # 前向反馈

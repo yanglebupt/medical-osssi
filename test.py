@@ -2,12 +2,15 @@ import torch
 import torch.nn as nn
 import numpy as np
 
-def test_proba(device,dataloader,model,loss_fn):
+def test_proba(device,dataloader,model,loss_fn, conv1d=False):
     error=0
     fin_probas=None
     fin_ls=None
     for batch,(X,l) in enumerate(dataloader):
         l = l.long()
+        n = l.shape[0]
+        if conv1d:
+            X = X.reshape((n,1,-1,1))
         # 将数据传送至设备里
         X,l = X.to(device),l.to(device)
         # 前向反馈
