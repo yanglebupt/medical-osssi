@@ -1,5 +1,4 @@
 import torch.nn as nn
-import torch
 
 def _gen_linear(pre_nums, next_nums, dropout=None, active=None):
     res = [nn.Linear(pre_nums, next_nums), dropout] if dropout else [nn.Linear(pre_nums, next_nums)]

@@ -1,5 +1,5 @@
-import torch
 import torch.nn as nn
+
 class ANNet_2(nn.Module):
     def __init__(self, layer_n, dropout=nn.Dropout(0.5), norm=nn.BatchNorm1d):
         super(ANNet_2, self).__init__()

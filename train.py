@@ -17,7 +17,7 @@ def create_optimizer(model):
                             eps=1e-8)
     return optimizer
 
-def create_fea45_model_by_name(name):
+def create_model_by_name(name):
     if name=="nnet":
         model = NNet(ipt=45, end=2, start=128, 
                    block=5, blocksize=3, 
@@ -35,23 +35,6 @@ def create_fea45_model_by_name(name):
         pass
     return model
 
-def create_fea16_model_by_name(name):
-    if name=="nnet":
-        model = NNet(ipt=16, end=2, start=128, 
-                   block=5, blocksize=3, 
-                   dropout=nn.Dropout(0.7)
-                  ).to(device)
-    elif name=="annet":
-        model = ANNet([16,128,256,128,64,32,16,4,2]).to(device)
-    elif name=="annet_2":
-        model = ANNet_2([16,128,256,128,64,32,16,4,2]).to(device)
-    elif name=="cnn1d_half":
-        model = CNN1d(dropout=nn.Dropout(0), drop_block=nn.Dropout2d(0), isHalf=True).to(device)
-    elif name=="cnn1d_fit":
-        model = CNN1d(dropout=nn.Dropout(0.7), drop_block=nn.Dropout2d(0.3)).to(device)
-    else:
-        pass
-    return model
 
 def train(device, dataloader, model, loss_fn, optimizer, conv1d=False, isprint=False):
     correct=0
