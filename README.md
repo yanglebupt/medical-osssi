@@ -17,7 +17,7 @@ pip install -r requirement.lock.txt
 - 执行下面的命令进行模型推理，`val_filepath` 参数指定验证数据集路径
 
 ```
-python main.py --val_filepath="./data/val.xlsx"
+python main.py --val_filepath="./data/val.xlsx" --save_filename="val"
 ```
 
 最终的结果会输出到 `output` 路径下

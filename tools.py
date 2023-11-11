@@ -121,3 +121,21 @@ def get_fea16(all_features):
             fea_2_names.append(key_func["rename"])
 
     return fea_1, fea_2
+
+
+def read_fea_label(filepath, usedHeaders, dtype="float64"):
+  values, headers, nullIndexs = readExcel(filepath)
+  rmRowIndexs = list(set(list(nullIndexs[0])))
+  print(f"删除了{len(rmRowIndexs)}行空值数据")
+  
+  features = getFeatures(values, headers, usedHeaders=usedHeaders, dtype=dtype)
+  features = np.delete(features,rmRowIndexs,0)
+  print("全部特征", features.shape, features.dtype)
+  print(features)
+
+  labels = getLabels(values, headers, labelHeader="ssi.bin", dtype="int")
+  labels = np.delete(labels,rmRowIndexs,0)
+  print("全部标签", labels.shape, labels.dtype)
+  print(labels)
+
+  return features, labels
