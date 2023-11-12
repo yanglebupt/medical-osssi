@@ -28,9 +28,22 @@ headers_3 = ["sbp.pre","dbp.pre","hr.pre",
              "alt.pre","alt.post","scr.pre","scr.post"
             ]
 
+# svc-rvc-ls
+var_one_1 = [
+    "copd",
+    "pad",
+    "picc",
+    "icu",
+    "los.icu",
+    "scopy.open",
+    "stoma",
+    "class.surg.t1",
+    {"key":"bleed","func":lambda fea: 1*(fea>500), "rename":"bleedG500"},
+    "weight"
+]
 
-# fea16
-var_one = [
+# nb, ann-cnn1d
+var_one_2 = [
     {"key":"weight","rename":"weight"},
     {"key":"copd","rename":"copd"},
     {"key":"pad", "rename":"pad"},
@@ -42,6 +55,7 @@ var_one = [
     {"key":"bleed","func":lambda fea: 1*(fea>500),"rename":"bleedG500"},
     {"key":"class.surg.t1","rename":"surgClass"}
 ]
+
 var_pre_post = [
     {"pre":"wbc.pre","post":"wbc.post","ctype":"post","islog":True,"rename":"WBCPostLog"},
     {"pre":"plt.pre","post":"plt.post","ctype":"change","islog":False,"rename":"PltChange"},

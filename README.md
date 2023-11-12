@@ -17,14 +17,28 @@ pip install -r requirement.lock.txt
 - 执行下面的命令进行模型推理，`val_filepath` 参数指定验证数据集路径
 
 ```
-python main.py --val_filepath="./data/val.xlsx" --save_filename="val"
+python main.py --val_filepath="./data/validation1109.xlsx" --save_filename="ann-cnn1d"
+python svc-rvc-lr-main.py --val_filepath="./data/validation1109.xlsx" --save_filename="svc-rvc-lr"
+python nb-main.py --val_filepath="./data/validation1109.xlsx" --save_filename="nb"
 ```
 
 最终的结果会输出到 `output` 路径下
 
 ### 目前的结果
 
-目前模型对于 整个训练集的结果如下
-![./data/rate_7_3.png](./data/rate_7_3.png)
+|  method   | ROC  | MAX |
+|  ----  | ----  | ---- |
+| LG  | 0.732713 |
+| SVC_Linear | 0.731084 |
+| SVC_RBF | 0.724891 |
+| RVC_Linear  | 0.736775 |
+| RVC_RBF | 0.736900 |
+| GLM | 0.733039 |
+| Naive Bayes | 0.711904 |
+| Naive Bayes (bins) | 0.713157 |
+| ANN | 0.731309 |
+| CNN1d-Fit | 0.759464 |
+| CNN1d-Half | 0.762683 $\pm$ 0.007819 | 0.777190 |
 
-![./data/rate_8_2.png](./data/rate_8_2.png)
+
+

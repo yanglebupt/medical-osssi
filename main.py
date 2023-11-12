@@ -36,23 +36,8 @@ def filter_model_filename(filenames,epoches):
 
 if __name__ == "__main__":
   args = parse_args_and_config()
-  values, headers, nullIndexs = readExcel(args.val_filepath)
-  rmRowIndexs = list(set(list(nullIndexs[0])))
-  print(f"删除了{len(rmRowIndexs)}行空值数据")
-  
-  all_features = getFeatures(values, headers, usedHeaders=usedHeaders, dtype=dtype)
-  all_features = np.delete(all_features,rmRowIndexs,0)
-  print("全部特征", all_features.shape, all_features.dtype)
-  print(all_features)
+  all_features, all_labels = read_fea_label(args.val_filepath, usedHeaders, dtype)
 
-  all_labels = getLabels(values, headers, labelHeader="ssi.bin", dtype="int")
-  all_labels = np.delete(all_labels,rmRowIndexs,0)
-  print("全部标签", all_labels.shape, all_labels.dtype)
-  print(all_labels)
-
-  print(len(headers_1)+len(headers_2)+len(headers_3)==len(usedHeaders))
-
-  # 全部特征
   print("使用全部特征")
   maxvalues_all = np.max(np.abs(all_features),axis=0)
   maxvalues_all_default = np.loadtxt(os.path.join(PRETRAINED_PATH, "maxvalues.txt"))
@@ -81,7 +66,6 @@ if __name__ == "__main__":
     folder = os.path.join(PRETRAINED_PATH, model_path)
     model_epoch_filenames = filter_model_filename(os.listdir(folder), epoches_list)
     pd_names.append(model_path)
-    print(model_epoch_filenames)
     for j, model_filename_list in enumerate(model_epoch_filenames): # 遍历epoch
       score_roc_auc_list = []
       for model_filename in model_filename_list:
@@ -103,18 +87,5 @@ if __name__ == "__main__":
   for i in range(len(epoches_list)):
     results[f"epoch_{epoches_list[i]}"] = all_epoch_results[:,i]
 
-  sheet = pd.DataFrame(results)
-
-  result_filename = f"{OUTPUT_PATH}/{args.save_filename}.xlsx"
-  exists = os.path.exists(result_filename)
-  mode = "a" if exists else "w"
-  kwargs={
-    "mode":mode,
-    "if_sheet_exists":"replace"
-  }if exists else {
-    "mode":mode
-  }
-  with pd.ExcelWriter(result_filename, **kwargs) as xlsx:
-    print(f"save sheet_name")
-    sheet.to_excel(xlsx, index=False)
+  save_xslx(OUTPUT_PATH, args.save_filename, results)
 

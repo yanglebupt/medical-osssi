@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from constants import var_pre_post,var_one,usedHeaders
+from constants import usedHeaders
 import argparse
 import os
 
@@ -80,7 +80,7 @@ def calcPrePost(features, ctype="post", islog=False):
     return np.log(res) if islog else res
 
 
-def get_fea16(all_features):
+def get_fea16(all_features, var_pre_post, var_one):
     fea_1 = None
     fea_1_names = []
     select_1_columns = []
@@ -103,22 +103,31 @@ def get_fea16(all_features):
     fea_2_names = []
     select_2_columns = []
     for key_func in var_one:
-        if not "func" in key_func:
+        if type(key_func)==str:
+            column = usedHeaders.index(key_func)
+            fea = all_features[:,column].reshape((-1,1))
+        elif not "func" in key_func:
             column = usedHeaders.index(key_func["key"])
             fea = all_features[:,column].reshape((-1,1))
         else:
             key = key_func["key"]
-            func = key_func["func"]
             column = usedHeaders.index(key)
             fea = all_features[:,column]
+            func = key_func["func"]
             fea = func(fea).reshape((-1,1))
         select_2_columns += [column]    
         fea_2 = fea if fea_2 is None else np.concatenate([fea_2,fea],axis=1)
         if fea.shape[1]>1:
-            fea_2_names.append(key_func["rename"]+"-pre")
-            fea_2_names.append(key_func["rename"]+"-post")
+            if type(key_func)==str:
+              fea_2_names.append(key_func)
+            else:
+              fea_2_names.append(key_func["rename"]+"-pre")
+              fea_2_names.append(key_func["rename"]+"-post")
         else:
-            fea_2_names.append(key_func["rename"])
+            if type(key_func)==str:
+              fea_2_names.append(key_func)
+            else:
+              fea_2_names.append(key_func["rename"])
 
     return fea_1, fea_2
 
@@ -139,3 +148,19 @@ def read_fea_label(filepath, usedHeaders, dtype="float64"):
   print(labels)
 
   return features, labels
+
+
+def save_xslx(dir:str, filename:str, results:dict):
+    result_filename = f"{dir}/{filename}.xlsx"
+    exists = os.path.exists(result_filename)
+    mode = "a" if exists else "w"
+    kwargs={
+      "mode":mode,
+      "if_sheet_exists":"replace"
+    }if exists else {
+      "mode":mode
+    }
+    sheet = pd.DataFrame(results)
+    with pd.ExcelWriter(result_filename, **kwargs) as xlsx:
+      print(f"save sheet_name")
+      sheet.to_excel(xlsx, index=False)

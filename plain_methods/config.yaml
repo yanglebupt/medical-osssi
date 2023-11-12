@@ -1,0 +1,53 @@
+class_weight: balanced
+
+lr:
+  solver: lbfgs
+
+svc:
+  kwargs:
+    random_state: 123
+    probability: True
+    
+  options:
+    - kernel: linear 
+      C: 0.005
+    
+    - kernel: poly 
+      degree: 3
+      C: 0.01
+
+    - kernel: poly 
+      degree: 6
+      C: 0.0005
+
+    - kernel: rbf 
+      C: 0.05
+    
+    - kernel: sigmoid 
+      C: 0.05
+
+rvc:
+  options:
+    - kernel: linear 
+    
+    - kernel: poly 
+      degree: 3
+
+    - kernel: poly 
+      degree: 6
+    
+    - kernel: poly 
+      degree: 9
+
+    - kernel: poly 
+      degree: 12
+    
+    - kernel: poly 
+      degree: 15
+
+    - kernel: poly 
+      degree: 18
+
+    - kernel: rbf 
+      verbose: False
+      n_iter_posterior: 10

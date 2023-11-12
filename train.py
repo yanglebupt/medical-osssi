@@ -27,10 +27,8 @@ def create_model_by_name(name):
         model = ANNet([45,128,256,128,64,32,16,4,2], norm=None).to(device)
     elif name=="ann-norm":
         model = ANNet_2([45,128,256,128,64,32,16,4,2]).to(device)
-    elif name=="cnn1d-half" or name=="cnn1d-half-01_1":
+    elif name=="cnn1d-half" or name=="cnn1d-half-01_1" or name.startswith("cnn1d-half-x"):
         model = CNN1d(dropout=None, drop_block=None, dropoutFirst=None, isHalf=True).to(device)
-    elif name=="cnn1d-half-drop0":
-        model = CNN1d(dropout=nn.Dropout(0), drop_block=nn.Dropout2d(0), dropoutFirst=None, isHalf=True).to(device)
     elif name=="cnn1d-fit":
         model = CNN1d(dropout=nn.Dropout(0.7), drop_block=nn.Dropout2d(0.3), dropoutFirst=None).to(device)
     else:
