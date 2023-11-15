@@ -26,19 +26,19 @@ python nb-main.py --val_filepath="./data/validation1109.xlsx" --save_filename="n
 
 ### 目前的结果
 
-|  method   | ROC  | MAX |
-|  ----  | ----  | ---- |
-| LG  | 0.732713 |
-| SVC_Linear | 0.731084 |
-| SVC_RBF | 0.724891 |
-| RVC_Linear  | 0.736775 |
-| RVC_RBF | 0.736900 |
-| GLM | 0.733039 |
-| Naive Bayes | 0.711904 |
-| Naive Bayes (bins) | 0.713157 |
-| ANN | 0.731309 |
-| CNN1d-Fit | 0.759464 |
-| CNN1d-Half | 0.762683 $\pm$ 0.007819 | 0.777190 |
-
-
+|  method   | Train ROC | Val ROC
+|  ----  | ---- | ----  |
+| LG  | 0.744961 | 0.732713 |
+| SVC_Linear | 0.744613 | 0.731084 |
+| SVC_RBF | 0.739970 | 0.724891 |
+| RVC_Linear | 0.741727 | 0.736775 |
+| RVC_RBF | 0.757279 | 0.736900 |
+| GLM | 0.740654 | 0.733039 |
+| Naive Bayes | 0.721975 | 0.711904 |
+| Naive Bayes (bins) | 0.705781 | 0.713157 |
+| ANN | 0.803266 | 0.731309 |
+| CNN1d-Fit | 0.793942 | 0.759464 |
+| CNN1d-Half (Avg10) | 0.796082 $\pm$ 0.007403 | 0.762683 $\pm$ 0.007819 |
+| CNN1d-Half (Train Max) | 0.810856 | 0.752119 |
+| CNN1d-Half (Val Max) | 0.793128 | 0.777190 |
 
