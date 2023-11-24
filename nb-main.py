@@ -64,7 +64,9 @@ def nb_test(features, labels):
         transform_fae_0 = np.load(os.path.join(rootdir, "transform_fae_0.npy"), allow_pickle=True)
         transform_fae_1 = np.load(os.path.join(rootdir, "transform_fae_1.npy"), allow_pickle=True)
         transform_faes = [transform_fae_0,transform_fae_1]
+        method="nb-bins"
       else:
+        method="nb"
         transform_faes = None
 
       for i, (_, pdf_m) in enumerate(fit_models_nb):
@@ -81,13 +83,13 @@ def nb_test(features, labels):
         model_and_traces_1,
       ],dtype="object")
 
-      scores = prediction_probas(features, p_probas, likehood_probas, train_maxvalues=maxvalues, transform_faes=transform_faes)[:,1]
-      score_roc_auc = roc_auc_score(labels, scores)
+      scores = prediction_probas(features, p_probas, likehood_probas, train_maxvalues=maxvalues, transform_faes=transform_faes)
+      save_scores(TMP_PATH + "/" + args.save_filename, "nb", scores, method, labels=labels)
+      score_roc_auc = roc_auc_score(labels, scores[:,1])
       print(f"method: {rootdir.split('/')[-1]}, roc: {score_roc_auc}")
       rocs.append(score_roc_auc)
 
     results = dict(model_names=[f.split("/")[-1] for f in rootdirs], roc=rocs)
-    
     save_xslx(OUTPUT_PATH, args.save_filename, results)
 
 if __name__ == "__main__":
@@ -97,6 +99,7 @@ if __name__ == "__main__":
   selected_features = np.concatenate([fea_1,fea_2],axis=1)
   config = yaml.safe_load("./plain_methods/config.yaml")
 
+  make_dir([OUTPUT_PATH, TMP_PATH, TMP_PATH + "/" + args.save_filename])
   nb_test(selected_features, labels)
 
   

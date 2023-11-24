@@ -11,6 +11,13 @@ usedHeaders = ["sex","age","height","weight","bmi","smoke",
                "scopy.open","stoma","class.surg.t1"
               ]
 
+# 术前变量
+pre_surg_headers = [
+    "sex","age","height","weight","bmi","smoke","hp","dm","chd","arrhy","copd",
+    "pad","rf","chemo","radio","pn","sbp.pre","dbp.pre","hr.pre",
+    "plt.pre","hb.pre","alb.pre","tbil.pre","wbc.pre","alt.pre","scr.pre","asa",
+    "class.surg.t1"
+]
 
 # 筛选的连续变量
 headers_1 = ["sex","age","height","weight","bmi","bleed","trans.surg","trans.post"]

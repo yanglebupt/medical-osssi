@@ -3,5 +3,6 @@ EPOCHES_ALL = [75,150,200,250,300,400,500,700,800,1000,1200,1500,2000]
 PRETRAINED_PATH = "./pre-trained"
 
 OUTPUT_PATH = "./output"
+TMP_PATH = "./output/tmp"
 
 MODEL_EXTENSION = ".pth"

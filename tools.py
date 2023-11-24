@@ -4,10 +4,11 @@ from constants import usedHeaders
 import argparse
 import os
 
-def make_dir(dir):
-    if os.path.exists(dir) and os.path.isdir(dir):
-        return
-    os.mkdir(dir)
+def make_dir(dirlist):
+    for dir in dirlist:
+      if os.path.exists(dir) and os.path.isdir(dir):
+        continue
+      os.mkdir(dir)
 
 
 def dict2namespace(config):
@@ -149,7 +150,6 @@ def read_fea_label(filepath, usedHeaders, dtype="float64"):
 
   return features, labels
 
-
 def save_xslx(dir:str, filename:str, results:dict):
     result_filename = f"{dir}/{filename}.xlsx"
     exists = os.path.exists(result_filename)
@@ -164,3 +164,20 @@ def save_xslx(dir:str, filename:str, results:dict):
     with pd.ExcelWriter(result_filename, **kwargs) as xlsx:
       print(f"save sheet_name")
       sheet.to_excel(xlsx, index=False)
+
+def save_scores(dir:str, filename:str, scores, sheetname:str, labels=None):
+    result_filename = f"{dir}/{filename}.xlsx"
+    exists = os.path.exists(result_filename)
+    mode = "a" if exists else "w"
+    kwargs={
+      "mode":mode,
+      "if_sheet_exists":"replace"
+    }if exists else {
+      "mode":mode
+    }
+    dic = {"p_0":scores[:,0], "p_1":scores[:,1]}
+    if labels is not None:
+      dic["labels"] = labels
+    sheet = pd.DataFrame(dic) 
+    with pd.ExcelWriter(result_filename, **kwargs) as xlsx:
+      sheet.to_excel(xlsx, index=False, sheet_name=sheetname)

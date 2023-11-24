@@ -1,7 +1,7 @@
 output/**
 **/.ipynb_checkpoints
 **/__pycache__
-show_xlsx.ipynb
+*.ipynb
 data/*.xlsx
 data/*.csv
 trains/dist/**

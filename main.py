@@ -15,6 +15,7 @@ def parse_args_and_config():
     parser = argparse.ArgumentParser(description=globals()['__doc__'])
     parser.add_argument('--val_filepath', type=str, default='./data/training1109.xlsx', help='输入验证数据集路径')
     parser.add_argument('--save_filename', type=str, default='results', help='结果输出文件名')
+    parser.add_argument('--type', type=str, default='all-features', help='all-features/fea16/pre-surg')
     args = parser.parse_args()
     return args
 
@@ -38,32 +39,47 @@ if __name__ == "__main__":
   args = parse_args_and_config()
   all_features, all_labels = read_fea_label(args.val_filepath, usedHeaders, dtype)
 
-  print("使用全部特征")
-  maxvalues_all = np.max(np.abs(all_features),axis=0)
-  maxvalues_all_default = np.loadtxt(os.path.join(PRETRAINED_PATH, "maxvalues.txt"))
+  modelType = args.type
+  pre_trained_root = os.path.join(PRETRAINED_PATH, modelType) 
+  if modelType=="all-features":
+    print("使用全部特征")
+    selected_features = all_features
+  elif modelType=="fea16":
+    print("使用筛选的16个特征")
+    fea_1, fea_2 = get_fea16(all_features, var_pre_post, var_one_2)
+    selected_features = np.concatenate([fea_1,fea_2],axis=1)
+  elif modelType=="pre-surg":
+    print("使用术前特征")
+    used_columns = [usedHeaders.index(n) for n in pre_surg_headers]
+    selected_features = all_features[:, used_columns]
+  else:
+     pass
+  maxvalues_all = np.max(np.abs(selected_features),axis=0)
+  maxvalues_all_default = np.loadtxt(os.path.join(pre_trained_root, "maxvalues.txt"))
   
   maxvalues_all_merge = np.max(
     np.concatenate([maxvalues_all.reshape((1,-1)),maxvalues_all_default.reshape((1,-1))],axis=0),
     axis=0
   )
 
-  fea_dataset = MyDataset(all_features, all_labels, maxvalues_all_default)
-  fea_dataloader = DataLoader(fea_dataset, batch_size=10, shuffle=True)
+  fea_dataset = MyDataset(selected_features, all_labels, maxvalues_all_default)
+  fea_dataloader = DataLoader(fea_dataset, batch_size=10, shuffle=False)
 
   torch.set_default_tensor_type(torch.FloatTensor)
 
   # 开始预测
   epoches_list = EPOCHES_ALL
-  model_list_path = [i for i in os.listdir(PRETRAINED_PATH) if os.path.isdir(
-     os.path.join(PRETRAINED_PATH,i)
+  model_list_path = [i for i in os.listdir(pre_trained_root) if os.path.isdir(
+     os.path.join(pre_trained_root,i)
   )]
 
   all_epoch_results = np.empty((len(model_list_path), len(epoches_list)), dtype=object)
   all_epoch_results.fill("")
 
   pd_names = []
+  make_dir([OUTPUT_PATH, TMP_PATH, TMP_PATH + "/" + args.save_filename])
   for i, model_path in enumerate(model_list_path):  # 遍历模型
-    folder = os.path.join(PRETRAINED_PATH, model_path)
+    folder = os.path.join(pre_trained_root, model_path)
     model_epoch_filenames = filter_model_filename(os.listdir(folder), epoches_list)
     pd_names.append(model_path)
     for j, model_filename_list in enumerate(model_epoch_filenames): # 遍历epoch
@@ -75,6 +91,7 @@ if __name__ == "__main__":
         model = model.eval()
         conv1d = "cnn1d" in model_path
         error, scores, labels = test_proba(device, fea_dataloader, model, loss_fn, conv1d=conv1d)
+        save_scores(TMP_PATH + "/" + args.save_filename, model_path, scores, model_filename)
         print(f"pre-trained_model_path: {model_path}, model_eopch: {model_filename}, error: {error}")
         scores_one = scores[:,1]
         score_roc_auc = roc_auc_score(labels, scores_one)
