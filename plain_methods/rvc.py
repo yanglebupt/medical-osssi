@@ -277,7 +277,7 @@ class RVC(BaseRVM, ClassifierMixin):
             self.weighting = compute_class_weight(self.class_weight, classes=self.classes_[::-1], y=y)
             self.weighting /= np.sum(self.weighting)  
         elif type(self.class_weight)==dict:
-            self.weighting=[self.class_weight["1"], self.class_weight["0"]]  
+            self.weighting=[self.class_weight[1], self.class_weight[0]]  
 
         self.w1 = self.weighting[0]
         self.w2 = self.weighting[1]
