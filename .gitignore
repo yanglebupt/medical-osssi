@@ -6,3 +6,4 @@ data/*.xlsx
 data/*.csv
 trains/dist/**
 !trains/dist/.gitkeep
+pre-trained/add

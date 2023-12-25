@@ -10,12 +10,17 @@ from train import *
 import yaml
 import os
 from sklearn.metrics import roc_auc_score
+from glob import glob
 
 def parse_args_and_config():
     parser = argparse.ArgumentParser(description=globals()['__doc__'])
     parser.add_argument('--val_filepath', type=str, default='./data/training1109.xlsx', help='输入验证数据集路径')
     parser.add_argument('--save_filename', type=str, default='results', help='结果输出文件名')
     parser.add_argument('--type', type=str, default='all-features', help='all-features/fea16/pre-surg')
+    parser.add_argument('--pretrained_root', type=str, help='预训练模型根目录')
+    parser.add_argument('--epoch_num', type=int, default=1, help='预训练模型的epoch数 1,2,3')
+    parser.add_argument('--use_weight', type=str, default="none", help='使用使用类别权重max/balanced/reciprocal/none')
+
     args = parser.parse_args()
     return args
 
@@ -40,7 +45,8 @@ if __name__ == "__main__":
   all_features, all_labels = read_fea_label(args.val_filepath, usedHeaders, dtype)
 
   modelType = args.type
-  pre_trained_root = os.path.join(PRETRAINED_PATH, modelType) 
+  pt_root = args.pretrained_root if args.pretrained_root is not None else modelType
+  pre_trained_root = os.path.join(PRETRAINED_PATH, pt_root) 
   if modelType=="all-features":
     print("使用全部特征")
     selected_features = all_features
@@ -54,6 +60,8 @@ if __name__ == "__main__":
     selected_features = all_features[:, used_columns]
   else:
      pass
+  
+  # 获取参数
   maxvalues_all = np.max(np.abs(selected_features),axis=0)
   maxvalues_all_default = np.loadtxt(os.path.join(pre_trained_root, "maxvalues.txt"))
   
@@ -65,10 +73,14 @@ if __name__ == "__main__":
   fea_dataset = MyDataset(selected_features, all_labels, maxvalues_all_default)
   fea_dataloader = DataLoader(fea_dataset, batch_size=10, shuffle=False)
 
+  # 获取类别权重
+  cls_weigths = torch.FloatTensor(np.loadtxt(glob(os.path.join(pre_trained_root, f"*cls-weight.{args.use_weight}.wig"))[0])) if args.use_weight!="none" else None
+  print(cls_weigths)
+
   torch.set_default_tensor_type(torch.FloatTensor)
 
   # 开始预测
-  epoches_list = EPOCHES_ALL
+  epoches_list = get_epoch_list(int(args.epoch_num))
   model_list_path = [i for i in os.listdir(pre_trained_root) if os.path.isdir(
      os.path.join(pre_trained_root,i)
   )]
@@ -85,12 +97,13 @@ if __name__ == "__main__":
     for j, model_filename_list in enumerate(model_epoch_filenames): # 遍历epoch
       score_roc_auc_list = []
       for model_filename in model_filename_list:
-        model = create_model_by_name(model_path)
+        model = create_model_by_name(model_path).to(device)
         checkpoint = torch.load(os.path.join(folder, model_filename))
         model.load_state_dict(checkpoint["model"])
         model = model.eval()
         conv1d = "cnn1d" in model_path
-        error, scores, labels = test_proba(device, fea_dataloader, model, loss_fn, conv1d=conv1d)
+        error, acc, scores, labels = train(device, fea_dataloader, model, create_loss_fn_weights(cls_weigths, device), 
+                                      train=False, conv1d=conv1d, useproba=True, weights=cls_weigths)
         save_scores(TMP_PATH + "/" + args.save_filename, model_path, scores, model_filename)
         print(f"pre-trained_model_path: {model_path}, model_eopch: {model_filename}, error: {error}")
         scores_one = scores[:,1]

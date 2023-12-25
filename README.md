@@ -12,6 +12,8 @@ pip install -r requirement.lock.txt
 
 - 执行下面的命令进行模型推理，`val_filepath` 参数指定验证数据集路径
 
+原始划分
+
 ```bash
 python main.py --val_filepath="./data/validation1109.xlsx" --save_filename="ann-cnn1d"
 
@@ -22,6 +24,12 @@ python main.py --val_filepath="./data/validation1109.xlsx" --type="pre-surg" --s
 python svc-rvc-lr-main.py --val_filepath="./data/validation1109.xlsx" --save_filename="svc-rvc-lr"
 
 python nb-main.py --val_filepath="./data/validation1109.xlsx" --save_filename="nb"
+```
+
+新划分
+
+```bash
+python main.py --val_filepath="./data/split-stratify-aa/train1225.xlsx" --save_filename="train-cnn1d-split" --use_weight="max" --epoch_num=3 --pretrained_root="split-aa-all-features"
 ```
 
 最终的结果会输出到 `output` 路径下
@@ -58,3 +66,6 @@ python nb-main.py --val_filepath="./data/validation1109.xlsx" --save_filename="n
 | all (Avg10) | 0.796082 $\pm$ 0.007403 | 0.762683 $\pm$ 0.007819 |
 | all (Train Max) | 0.810856 | 0.752119 |
 | all (Val Max) | 0.793128 | 0.777190 |
+
+
+### 新的分层划分测试集+新增变量AA 的结果

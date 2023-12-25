@@ -8,7 +8,7 @@ usedHeaders = ["sex","age","height","weight","bmi","smoke",
                "alb.post","tbil.pre","tbil.post","wbc.pre","wbc.post",
                "alt.pre","alt.post","scr.pre","scr.post","asa","bleed",
                "trans.surg","trans.post","icu","los.icu","scopy","open",
-               "scopy.open","stoma","class.surg.t1"
+               "scopy.open","stoma","class.surg.t1","aa"
               ]
 
 # 术前变量
@@ -25,7 +25,7 @@ headers_1 = ["sex","age","height","weight","bmi","bleed","trans.surg","trans.pos
 # 筛选的分类变量
 headers_2 = ["smoke","hp","dm","chd","arrhy","copd","pad",
              "rf","chemo","radio","pn","picc","asa","icu","los.icu",
-             "scopy","open","scopy.open","stoma","class.surg.t1"
+             "scopy","open","scopy.open","stoma","class.surg.t1","aa"
             ]
              
 # 筛选的术前术后变量
@@ -45,6 +45,7 @@ var_one_1 = [
     "scopy.open",
     "stoma",
     "class.surg.t1",
+    "aa",
     {"key":"bleed","func":lambda fea: 1*(fea>500), "rename":"bleedG500"},
     "weight"
 ]
@@ -71,3 +72,5 @@ var_pre_post = [
     {"pre":"alt.pre","post":"alt.post","ctype":"rate","islog":True,"rename":"AltRateLog"},
     {"pre":"scr.pre","post":"scr.post","ctype":"rate","islog":False,"rename":"ScrRate"},
 ]
+
+cls_header_index = cls_header_index = [usedHeaders.index(h) for h in headers_2] 
