@@ -1,0 +1,109 @@
+.headers {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr 0.8fr 1fr;
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @media screen and (max-width: 750px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  align-items: center;
+  margin: 30px 0 20px 0;
+  .header-row {
+    margin: 5px;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 20px;
+    &.empty {
+      input {
+        border: 2px solid red;
+      }
+    }
+    label {
+      margin: 0 10px;
+    }
+    input {
+      border-radius: 5px;
+      align-self: center;
+      box-sizing: border-box;
+      outline: none;
+      border: 1px solid black;
+      color: brown;
+      font-weight: bolder;
+      height: 27px;
+      width: 100px;
+    }
+  }
+}
+.select {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: min(100%, 1000px);
+  .select-item {
+    text-align: center;
+    &.selected {
+      .select-item-mark {
+        background-color: rgb(94, 255, 0);
+      }
+    }
+    .select-item-mark {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      transition: all 0.3s ease;
+      vertical-align: middle;
+      margin-right: 10px;
+      border-radius: 50%;
+      border: 3px solid rgba(0, 0, 0, 0.395);
+      background-color: white;
+      &:hover {
+        background-color: yellowgreen;
+      }
+    }
+    .select-item-text {
+      vertical-align: middle;
+      &:hover {
+        cursor: default;
+      }
+    }
+  }
+}
+.btn {
+  width: 80px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  background-color: rgb(0, 255, 106);
+  cursor: pointer;
+  margin-right: 10px;
+  &:hover {
+    background-color: rgb(0, 237, 99);
+  }
+}
+
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #000;
+  border-top-color: rgba(0, 0, 0, 0.2);
+  border-right-color: rgba(0, 0, 0, 0.2);
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  border-radius: 100%;
+  animation: circle infinite 0.75s linear;
+  vertical-align: middle;
+}
+.warn {
+  color: red;
+}
+
+@keyframes circle {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
