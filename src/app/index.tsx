@@ -1,23 +1,9 @@
 import { useCallback, useMemo, useState } from "react";
-import styles from "./index.module.less";
 import cs from "classnames";
-import { usedHeaders_list, header_mapping } from "./headers";
-import { convertDictNumber, predict } from "./tool";
+import { usedHeaders_list, header_mapping, now_methods } from "./headers";
+import { convertDictNumber, predict } from "../tool";
+import styles from "./index.module.less";
 import "./index.css";
-const now_methods = [
-  {
-    id: "1",
-    text: "Preoperative",
-  },
-  {
-    id: "2",
-    text: "Preoperative+Intraoperative",
-  },
-  {
-    id: "3",
-    text: "Preoperative+Intraoperative+Postoperative",
-  },
-];
 
 export default () => {
   const [selectedId, setSelectedId] = useState("1");

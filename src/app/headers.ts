@@ -205,4 +205,19 @@ const header_mapping: Record<string, string> = {
   "plt.post": "Postoperative Plt",
 };
 
-export { usedHeaders_list, label_name, header_mapping };
+const now_methods = [
+  {
+    id: "1",
+    text: "Preoperative",
+  },
+  {
+    id: "2",
+    text: "Preoperative+Intraoperative",
+  },
+  {
+    id: "3",
+    text: "Preoperative+Intraoperative+Postoperative",
+  },
+];
+
+export { usedHeaders_list, label_name, header_mapping, now_methods };

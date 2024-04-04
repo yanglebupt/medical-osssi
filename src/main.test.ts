@@ -1,5 +1,5 @@
 import * as XLSX from "xlsx";
-import { label_name, usedHeaders_list } from "./headers";
+import { label_name, usedHeaders_list } from "./app/headers";
 import { predict, requestBuffer } from "./tool";
 import filepath from "./data0130/0126validation2.xlsx";
 
