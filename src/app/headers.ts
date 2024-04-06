@@ -1,3 +1,26 @@
+// import m_1 from "../models/1.onnx";
+// import m_1A from "../models/1A.onnx";
+// import m_1S from "../models/1S.onnx";
+// import m_2 from "../models/2.onnx";
+// import m_2A from "../models/2A.onnx";
+// import m_2S from "../models/2S.onnx";
+// import m_3 from "../models/3.onnx";
+// import m_3A from "../models/3A.onnx";
+// import m_3S from "../models/3S.onnx";
+
+const models = import.meta.glob("../models/*.onnx", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>;
+
+const getModelPathByName = (name: string) => {
+  const finded = Object.entries(models).find(([n, _]) => {
+    return n.split("/").at(-1)?.split(".").at(0) == name;
+  });
+  if (!finded) throw new Error("");
+  return finded[1];
+};
+
 /*================= 未筛选前 ================= */
 // 术前变量
 const pre_headers = [
@@ -138,20 +161,20 @@ const pre_mid_post_headers_A = [
 
 const label_name = "ssi.bin";
 const usedHeaders_list: Array<[string, string[], number, string]> = [
-  ["1", pre_headers, 1, "/models/1.onnx"],
-  ["1S", pre_headers_S, 4, "/models/1S.onnx"],
-  ["1A", pre_headers_A, 7, "/models/1A.onnx"],
-  ["2", pre_headers.concat(mid_headers), 2, "/models/2.onnx"],
-  ["2S", pre_mid_headers_S, 5, "/models/2S.onnx"],
-  ["2A", pre_mid_headers_A, 8, "/models/2A.onnx"],
+  ["1", pre_headers, 1, getModelPathByName("1")],
+  ["1S", pre_headers_S, 4, getModelPathByName("1S")],
+  ["1A", pre_headers_A, 7, getModelPathByName("1A")],
+  ["2", pre_headers.concat(mid_headers), 2, getModelPathByName("2")],
+  ["2S", pre_mid_headers_S, 5, getModelPathByName("2S")],
+  ["2A", pre_mid_headers_A, 8, getModelPathByName("2A")],
   [
     "3",
     pre_headers.concat(mid_headers).concat(post_headers),
     3,
-    "/models/3.onnx",
+    getModelPathByName("3"),
   ],
-  ["3S", pre_mid_post_headers_S, 6, "/models/3S.onnx"],
-  ["3A", pre_mid_post_headers_A, 9, "/models/3A.onnx"],
+  ["3S", pre_mid_post_headers_S, 6, getModelPathByName("3S")],
+  ["3A", pre_mid_post_headers_A, 9, getModelPathByName("3A")],
 ];
 
 const header_mapping: Record<string, string> = {
