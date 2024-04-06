@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/less": "^3.0.6",
     "@types/react": "^18.2.74",
+    "@types/react-css-modules": "^4.6.8",
     "@types/react-dom": "^18.2.23",
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.2.2",
@@ -23,6 +25,7 @@
     "less": "^4.2.0",
     "onnxruntime-web": "^1.17.1",
     "react": "^18.2.0",
+    "react-css-modules": "^4.7.11",
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "xlsx": "^0.18.5"
