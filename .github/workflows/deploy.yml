@@ -96,10 +96,11 @@ jobs:
       - name: Login serve
         uses: garygrossgarten/github-action-ssh@release
         env:
+          tags: ${{ needs.build-image.outputs.tags }}
           image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
         with:
           command: |
-            aa=${{ needs.build-image.outputs.tags }}
+            aa=${{ env.tags }}
             docker -v
             docker login -u ${{ vars.REGISTRY_USERNAME }} ${{ env.REGISTRY }} -p ${{ vars.REGISTRY_PASSWORD }}
             docker pull ${{ env.image }}
