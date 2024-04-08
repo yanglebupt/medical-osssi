@@ -100,9 +100,12 @@ jobs:
     runs-on: ubuntu-latest
     # needs: build-image
     steps:
-      - env:
-          # tags: ${{ needs.build-image.outputs.tags }}
-          tags: sss
-        run: |
-          ssh ${{ secrets.SHH_USERNAME }}@${{ secrets.SHH_HOST }} -tt
-          docker -v
+      - name: Login serve
+
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: docker -v
+          host: ${{ secrets.SHH_HOST }}
+          username: ${{ secrets.SHH_USERNAME }}
+          port: 22
+          privateKey: ${{ secrets.SHH_PASSWARD}}
