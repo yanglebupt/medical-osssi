@@ -109,7 +109,7 @@ jobs:
             docker -v
             docker login -u ${{ vars.REGISTRY_USERNAME }} ${{ env.REGISTRY }} -p ${{ vars.REGISTRY_PASSWORD }}
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.tags }}
-            docker run --name -p 80:80 -d ${{ env.IMAGE_NAME }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.tags }}
+            docker run --name ${{ env.IMAGE_NAME }} -p 80:80 -d ${{ env.IMAGE_NAME }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.tags }}
           host: ${{ secrets.SHH_HOST }}
           username: ${{ secrets.SHH_USERNAME }}
           port: 22
