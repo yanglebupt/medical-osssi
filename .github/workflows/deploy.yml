@@ -104,5 +104,5 @@ jobs:
           # tags: ${{ needs.build-image.outputs.tags }}
           tags: sss
         run: |
-          echo "${{ secrets.SHH_PASSWARD }}" | ssh ${{ secrets.SHH_USERNAME }}@${{ secrets.SHH_HOST }} -i StrictHostKeyChecking=no -tt
+          ssh ${{ secrets.SHH_USERNAME }}@${{ secrets.SHH_HOST }}
           docker -v
