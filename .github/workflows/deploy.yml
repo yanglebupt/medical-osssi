@@ -48,6 +48,7 @@ jobs:
 
       - name: Build Dist
         run: |
+          npm i
           npm run build
 
       # Set up BuildKit Docker container builder to be able to build
