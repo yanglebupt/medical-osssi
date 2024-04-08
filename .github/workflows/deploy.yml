@@ -41,6 +41,15 @@ jobs:
         with:
           cosign-release: "v2.1.1"
 
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.6.0
+
+      - name: Build Dist
+        run: |
+          npm run build
+
       # Set up BuildKit Docker container builder to be able to build
       # multi-platform images and export cache
       # https://github.com/docker/setup-buildx-action
