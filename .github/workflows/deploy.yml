@@ -100,8 +100,6 @@ jobs:
           image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
         with:
           command: |
-            aa=${{ env.tags }}
-            docker -v
             docker login -u ${{ vars.REGISTRY_USERNAME }} ${{ env.REGISTRY }} -p ${{ vars.REGISTRY_PASSWORD }}
             docker pull ${{ env.image }}
             cname=${{ env.IMAGE_NAME }}
