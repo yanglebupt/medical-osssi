@@ -112,6 +112,7 @@ jobs:
             docker pull ${{ env.image }}
             cname=${{ env.IMAGE_NAME }}
             cname=${cname/\//-}
+            docker rm -f $(docker ps -aq --no-trunc --filter name=$cname)
             docker run --name $cname -p 80:80 -d ${{ env.image }}
             unset cname
           host: ${{ secrets.SHH_HOST }}
