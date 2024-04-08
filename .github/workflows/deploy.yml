@@ -18,10 +18,6 @@ env:
 jobs:
   build-image:
     runs-on: ubuntu-latest
-
-    outputs:
-      tags: ${{ steps.meta.outputs.tags }}
-
     permissions:
       contents: read
       packages: write
@@ -91,12 +87,10 @@ jobs:
 
   serve-container:
     runs-on: ubuntu-latest
-    needs: build-image
     steps:
       - name: Login serve
         uses: garygrossgarten/github-action-ssh@release
         env:
-          tags: ${{ needs.build-image.outputs.tags }}
           image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
         with:
           command: |
