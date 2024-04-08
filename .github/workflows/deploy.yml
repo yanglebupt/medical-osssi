@@ -103,7 +103,7 @@ jobs:
       - name: Login serve
         uses: garygrossgarten/github-action-ssh@release
         env:
-          tags: sha-9924b7d
+          tags: sha
           image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-9924b7d
         with:
           command: |
