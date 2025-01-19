@@ -42,6 +42,11 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
         setProbas(results);
         setLoading(false);
         setChecked(false);
+        // scroll to end
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth'
+        });
       }).catch((error: Error)=>{
         setError(error.message);
         setProbas([]);
