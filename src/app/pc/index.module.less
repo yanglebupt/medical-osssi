@@ -13,29 +13,46 @@
     margin: 5px;
     display: flex;
     justify-content: space-between;
+    flex-direction: row-reverse;
     padding-right: 20px;
     &.empty {
-      input {
+      .ipt {
         border: 2px solid red;
       }
     }
     label {
       margin: 0 10px;
+      flex: 1;
     }
-    input {
+    .ipt {
       border-radius: 5px;
       align-self: center;
       box-sizing: border-box;
       outline: none;
       border: 1px solid black;
-      color: brown;
+      color: black;
       font-weight: bolder;
       height: 27px;
       width: 100px;
+      &:focus{
+        border: 2px solid green;
+        color: green;
+        &~label{
+          color: green;
+          font-weight: bold;
+        }
+      }
+    }
+    .opts-not-selected{
+      font-weight: normal;
+    }
+    .opt{
+      color: black;
     }
   }
 }
 .select {
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -48,6 +65,10 @@
         &:hover {
           background-color: rgb(94, 255, 0);
         }
+      }
+      .select-item-text{
+        font-weight: bold;
+        color: green;
       }
     }
     .select-item-mark {
@@ -66,14 +87,11 @@
     }
     .select-item-text {
       vertical-align: middle;
-      &:hover {
-        cursor: default;
-      }
     }
   }
 }
 .btn {
-  width: 80px;
+  width: 200px;
   height: 30px;
   border-radius: 10px;
   border: none;
@@ -97,9 +115,16 @@
   border-radius: 100%;
   animation: circle infinite 0.75s linear;
   vertical-align: middle;
+  margin-right: 10px;
 }
+
 .warn {
   color: red;
+}
+
+.results{
+  margin-top: 20px;
+  margin-left: 10px;
 }
 
 @keyframes circle {

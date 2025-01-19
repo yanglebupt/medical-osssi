@@ -1,23 +1,28 @@
 import { useCallback, useMemo, useState } from "react";
 import cs from "classnames";
-import { usedHeaders_list, header_mapping, now_methods } from "./headers";
-import { convertDictNumber, predict } from "../tool";
+import { usedHeaders_list, header_mapping, now_methods, get_options_by_header, numerical_headers } from "./headers";
+import { convertDictNumber, predict, method_mapping, mean_std } from "../tool";
 
 export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
   const [selectedId, setSelectedId] = useState("1");
   const [checked, setChecked] = useState(false);
-  const [__, headers, _, model_path] = useMemo(
+  const [name, headers] = useMemo(
     () => usedHeaders_list.find((p) => p[0] === selectedId)!,
     [selectedId]
   );
   const [form, setForm] = useState<Record<string, string>>({});
 
   const emptyHeaders = useMemo(
-    () => headers.filter((h) => !(h in form) || form[h] === ""),
+    () => headers.filter((h) => !(h in form) || form[h] === "" || form[h] === "-1"),
     [headers, form]
   );
 
-  const [proba, setProba] = useState("");
+  const [probas, setProbas] = useState<{
+      method: string;
+      probs_list: Array<Array<number>>;
+  }[]>([]);
+  const [error, setError] = useState("")
+  const [progress, setProgress] = useState("")
   const [loading, setLoading] = useState(false);
 
   const submit = useCallback(() => {
@@ -25,11 +30,21 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
     setChecked(true);
     if (emptyHeaders.length === 0) {
       setLoading(true);
-      predict(convertDictNumber([form]), headers, model_path, [
+      setProgress("")
+      predict(convertDictNumber([form]), headers, name, [
         1,
         headers.length,
-      ]).then((proba) => {
-        setProba(proba[0] + "");
+      ], (message, progress)=>{
+        setProgress(`${message}-${(progress*100).toFixed(0)}%`)
+      }).then((results) => {
+        setError("")
+        console.log(results)
+        setProbas(results);
+        setLoading(false);
+        setChecked(false);
+      }).catch((error: Error)=>{
+        setError(error.message);
+        setProbas([]);
         setLoading(false);
         setChecked(false);
       });
@@ -62,65 +77,97 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
               emptyHeaders.includes(h) && checked ? styles["empty"] : ""
             )}
           >
-            <label htmlFor={h}>{header_mapping[h]}</label>
             {/* 验证输入是否合法，整数，小数，二分类 */}
-            <input
-              id={h}
-              type="text"
-              autoComplete="off"
-              onBeforeInput={({ target }: any) =>
-                (target.dataset.pre = target.value)
-              }
-              onInput={({ target }: any) => {
-                // 限制不合法输入
-                const pre = target.dataset.pre as string;
-                const now = target.value as string;
-                let value = now;
-                if (
-                  pre.includes(".") &&
-                  now.indexOf(".") !== now.lastIndexOf(".")
-                ) {
-                  value = now
-                    .split(".")
-                    .reduce(
-                      (pre: string, cur: string, idx: number) =>
-                        `${pre}${cur}${idx === 0 ? "." : ""}`,
-                      ""
-                    );
-                } else {
-                  value = target.value.replace(/[^(\d|\.)]/g, "");
+            {numerical_headers.includes(h)?
+              <input
+                className={styles["ipt"]}
+                id={h}
+                type="text"
+                autoComplete="off"
+                onBeforeInput={({ target }: any) =>
+                  (target.dataset.pre = target.value)
                 }
-                setForm({
-                  ...form,
-                  [h]: value,
+                onInput={({ target }: any) => {
+                  // 限制不合法输入
+                  const pre = target.dataset.pre as string;
+                  const now = target.value as string;
+                  let value = now;
+                  if (
+                    pre.includes(".") &&
+                    now.indexOf(".") !== now.lastIndexOf(".")
+                  ) {
+                    value = now
+                      .split(".")
+                      .reduce(
+                        (pre: string, cur: string, idx: number) =>
+                          `${pre}${cur}${idx === 0 ? "." : ""}`,
+                        ""
+                      );
+                  } else {
+                    value = target.value.replace(/[^(\d|\.)]/g, "");
+                  }
+                  setForm({
+                    ...form,
+                    [h]: value,
+                  });
+                }}
+                value={form[h] ?? ""}
+              />
+            : 
+              <select 
+                id={h} 
+                className={cs(styles["ipt"], styles["opts"], ((form[h] as any)??-1) == -1 ? styles["opts-not-selected"] : "")} 
+                onChange={({target})=>{
+                  setForm({
+                    ...form,
+                    [h]: target.value + "",
                 });
-                setProba("");
-              }}
-              value={form[h] || ""}
-            />
+              }} 
+              value={form[h]??-1}
+              title={get_options_by_header(h)[form[h] as any] ?? "==Select=="}
+              >
+                <option value={-1} key={-1} className={styles["opt"]}>==Select==</option>
+                {
+                  get_options_by_header(h)
+                    .map(((op, idx)=>!!op?<option className={styles["opt"]} value={idx} key={op}>{op}</option>:null))
+                }
+              </select>
+            }
+            <label htmlFor={h} title={h}>{header_mapping[h]}</label>
           </div>
         ))}
       </div>
       <div>
         <button className={styles["btn"]} onClick={submit}>
-          Predict
+          Predict Risk of infection
         </button>
-        <span className={styles["res"]}>
-          Risk of infection：
+        <span>
           {checked && emptyHeaders.length > 0 ? (
             <span className={styles["warn"]}>
               "Please fill in the valid values within the red border before
               clicking on the prediction"
             </span>
           ) : loading ? (
-            <i className={styles["loading"]}></i>
-          ) : proba === "" ? (
-            ""
-          ) : (
-            Number(proba).toFixed(3)
-          )}
+            <>
+              <i className={styles["loading"]}></i>
+              <span>{progress}</span>
+            </>
+          ) : null}
         </span>
       </div>
+      {
+        !loading &&
+        <div className={styles["results"]}>
+          {error == "" ?
+            probas.map(({method, probs_list})=>
+              <div key={method} className={styles["method-result"]}>
+                <span className={styles["method"]}>{method_mapping[method]}：</span>
+                <span className={styles["result"]}>{mean_std(probs_list.map(nums=>nums[0])).join("±")}</span>
+              </div>
+            ):<div className={styles["warn"]}>{error}</div>
+          }
+        </div>
+      }
     </>
   );
 };

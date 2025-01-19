@@ -1,26 +1,3 @@
-// import m_1 from "../models/1.onnx";
-// import m_1A from "../models/1A.onnx";
-// import m_1S from "../models/1S.onnx";
-// import m_2 from "../models/2.onnx";
-// import m_2A from "../models/2A.onnx";
-// import m_2S from "../models/2S.onnx";
-// import m_3 from "../models/3.onnx";
-// import m_3A from "../models/3A.onnx";
-// import m_3S from "../models/3S.onnx";
-
-const models = import.meta.glob("../models/*.onnx", {
-  eager: true,
-  import: "default",
-}) as Record<string, string>;
-
-const getModelPathByName = (name: string) => {
-  const finded = Object.entries(models).find(([n, _]) => {
-    return n.split("/").at(-1)?.split(".").at(0) == name;
-  });
-  if (!finded) throw new Error("");
-  return finded[1];
-};
-
 /*================= 未筛选前 ================= */
 // 术前变量
 const pre_headers = [
@@ -51,7 +28,10 @@ const pre_headers = [
   "class.surg.t1",
 ];
 // 术中变量
-const mid_headers = ["plasma", "rbc", "stoma", "bleed", "aa"];
+const mid_headers = [
+  "plasma", "rbc", "stoma", "bleed","aa",
+  "hr_lower","hr_upper","sbp_lower","sbp_upper","dbp_lower","dbp_upper"
+];
 // 术后变量
 const post_headers = [
   "plt.post",
@@ -65,116 +45,41 @@ const post_headers = [
   "los.icu",
 ];
 
-/*================= 筛选S ================= */
-const pre_headers_S = [
-  "time.surg",
-  "weight",
-  "copd",
-  "pad",
-  "radio",
-  "class.surg.t1",
-  "pn",
-  "alt.pre",
-];
+const numerical_headers: Array<string> = [
+  "age","time.surg","height","weight","plasma","rbc","bleed",
+  "hr_lower","hr_upper","sbp_lower","sbp_upper","dbp_lower","dbp_upper",
+  "plt.pre","plt.post","hb.pre","hb.post","alb.pre",
+  "alb.post","tbil.pre","tbil.post","wbc.pre","wbc.post",
+  "alt.pre","alt.post","scr.pre","scr.post"
+]
 
-const pre_mid_headers_S = [
-  "time.surg",
-  "weight",
-  "copd",
-  "pad",
-  "class.surg.t1",
-  "pn",
-  "alt.pre",
-  "bleed",
-  "plasma",
-  "rbc",
-  "stoma",
-  "aa",
-];
+const category_headers: Array<string> = [
+  "sex", "smoke","hp","dm","chd","arrhy","copd","pad",
+  "rf","chemo","radio","pn","asa","icu","los.icu",
+  "stoma","class.surg.t1","aa"
+]
 
-const pre_mid_post_headers_S = [
-  "time.surg",
-  "weight",
-  "copd",
-  "pad",
-  "rf",
-  "class.surg.t1",
-  "pn",
-  "alb.pre",
-  "tbil.pre",
-  "rbc",
-  "stoma",
-  "aa",
-  "los.icu",
-  "alb.post",
-  "hb.post",
-  "plt.pre",
-  "plt.post",
-  "tbil.post",
-  "scr.post",
-  "wbc.post",
-];
+const category_options: Record<string, Array<string>> = {
+  "sex": ["male", "female"],
+  "pn":["no","one day before surgery","more than one day before surgery"],
+  "asa":["","I","II","III","IV"],
+  "class.surg.t1":["upper gastrointestinal tract","lower gastrointestinal tract","pancreaticoduodenectomy","pancreatic body and tail resection surgery"],
+  "aa":["manual fasten","medical instrument fasten","medical instrument plus manual fasten","mixture fasten","medical machine fasten"],
+}
 
-/*================= 筛选A ================= */
-const pre_headers_A = [
-  "time.surg",
-  "weight",
-  "copd",
-  "pad",
-  "radio",
-  "class.surg.t1",
-  "pn",
-];
-
-const pre_mid_headers_A = [
-  "weight",
-  "copd",
-  "pad",
-  "class.surg.t1",
-  "pn",
-  "bleed",
-  "plasma",
-  "rbc",
-  "stoma",
-  "aa",
-];
-
-const pre_mid_post_headers_A = [
-  "weight",
-  "copd",
-  "pad",
-  "class.surg.t1",
-  "pn",
-  "alb.pre",
-  "rbc",
-  "stoma",
-  "aa",
-  "los.icu",
-  "alb.post",
-  "hb.post",
-  "plt.pre",
-  "plt.post",
-  "tbil.post",
-  "scr.post",
-  "wbc.post",
-];
+function get_options_by_header(header: string) {
+  return category_options[header] ?? ["no", "yes"]
+}
+             
 
 const label_name = "ssi.bin";
-const usedHeaders_list: Array<[string, string[], number, string]> = [
-  ["1", pre_headers, 1, getModelPathByName("1")],
-  ["1S", pre_headers_S, 4, getModelPathByName("1S")],
-  ["1A", pre_headers_A, 7, getModelPathByName("1A")],
-  ["2", pre_headers.concat(mid_headers), 2, getModelPathByName("2")],
-  ["2S", pre_mid_headers_S, 5, getModelPathByName("2S")],
-  ["2A", pre_mid_headers_A, 8, getModelPathByName("2A")],
+const usedHeaders_list: Array<[string, string[]]> = [
+  ["1", pre_headers],
+  ["2", pre_headers.concat(mid_headers)],
   [
     "3",
     pre_headers.concat(mid_headers).concat(post_headers),
-    3,
-    getModelPathByName("3"),
   ],
-  ["3S", pre_mid_post_headers_S, 6, getModelPathByName("3S")],
-  ["3A", pre_mid_post_headers_A, 9, getModelPathByName("3A")],
 ];
 
 const header_mapping: Record<string, string> = {
@@ -226,6 +131,12 @@ const header_mapping: Record<string, string> = {
   "scr.post": "Postoperative Scr",
   "tbil.post": "Postoperative Tbil",
   "plt.post": "Postoperative Plt",
+  "hr_lower": "TWA-HR < 45 bpm",
+  "hr_upper": "TWA-HR > 100 bpm",
+  "sbp_lower": "TWA-SBp < 90 mmHg",
+  "sbp_upper": "TWA-SBp > 160 mmHg",
+  "dbp_lower": "TWA-DBp < 50 mmHg",
+  "dbp_upper": "TWA-DBp > 100 mmHg"
 };
 
 const now_methods = [
@@ -243,4 +154,4 @@ const now_methods = [
   },
 ];
 
-export { usedHeaders_list, label_name, header_mapping, now_methods };
+export { usedHeaders_list, label_name, header_mapping, now_methods,numerical_headers, category_headers, get_options_by_header };
