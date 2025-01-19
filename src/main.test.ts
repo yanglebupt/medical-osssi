@@ -1,7 +1,8 @@
 import * as XLSX from "xlsx";
 import { label_name, usedHeaders_list } from "./app/headers";
 import { predict, requestBuffer } from "./tool";
-import filepath from "./data0130/0126validation2.xlsx";
+// import filepath from "./data0130/0126validation2.xlsx";
+import filepath from "./data0130/0126training.xlsx";
 
 const excelBuffer = await requestBuffer(filepath);
 const workbook = XLSX.read(excelBuffer, {
@@ -16,6 +17,6 @@ usedHeaders_list.slice(0, 1).forEach(async ([name, usedHeaders, _, path]) => {
     usedHeaders.length,
   ]);
   const labels = worksheetJson.map((record: any) => record[label_name]);
-  console.log(labels);
-  console.log(probs);
+  console.log(labels.slice(0, 10));
+  console.log(probs.slice(0, 10));
 });

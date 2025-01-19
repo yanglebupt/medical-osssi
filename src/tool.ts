@@ -39,6 +39,7 @@ export async function predict(
       return record[k];
     });
   });
+  console.log(feature_list);
   const featuresF32 = new Float32Array(feature_list.flat());
   const session = await ort.InferenceSession.create(path);
   const model_ipt = {
