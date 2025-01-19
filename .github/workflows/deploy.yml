@@ -102,6 +102,7 @@ jobs:
             docker rm -f $(docker ps -aq --no-trunc --filter name=$cname)
             docker run --name $cname -p 80:80 -d ${{ env.image }}
             unset cname
+            docker image prune -f
           host: ${{ secrets.SHH_HOST }}
           username: ${{ secrets.SHH_USERNAME }}
           port: 22
