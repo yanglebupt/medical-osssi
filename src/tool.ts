@@ -38,6 +38,10 @@ const modelpath_mapping = import.meta.glob("./models/**/*.onnx", {
   import: "default",
 }) as Record<string, string>;
 
+export function is_empty(form:Record<string, string>, h:string){
+  return !(h in form) || form[h] === "" || form[h] === "-1"
+}
+
 export async function predict(
   datas: Array<Record<string, number>>,
   usedHeaders: string[],
@@ -47,10 +51,8 @@ export async function predict(
 ){
   const [feature_nums, features] = dims;
   const feature_list = datas.map((record: any) => {
-    return usedHeaders.map((k) => {
-      if (!(k in record)) throw new Error(`${k} header is not in input datas`);
-      return record[k];
-    });
+    // throw new Error(`${k} header is not in input datas`);
+    return usedHeaders.map((k) => is_empty(record, k) ? undefined : record[k]);
   });
   console.log(feature_list);
   const featuresF32 = new Float32Array(feature_list.flat());

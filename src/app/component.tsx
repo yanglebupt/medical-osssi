@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import cs from "classnames";
 import { usedHeaders_list, header_mapping, now_methods, get_options_by_header, numerical_headers } from "./headers";
-import { convertDictNumber, predict, method_mapping, mean_std } from "../tool";
+import { convertDictNumber, predict, method_mapping, mean_std, is_empty } from "../tool";
 
 export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
   const [selectedId, setSelectedId] = useState("1");
@@ -13,7 +13,7 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
   const [form, setForm] = useState<Record<string, string>>({});
 
   const emptyHeaders = useMemo(
-    () => headers.filter((h) => !(h in form) || form[h] === "" || form[h] === "-1"),
+    () => headers.filter((h) => is_empty(form, h)),
     [headers, form]
   );
 
