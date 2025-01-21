@@ -101,9 +101,10 @@ jobs:
             cname=${cname/\//-}
             docker rm -f $(docker ps -aq --no-trunc --filter name=$cname)
             docker image prune -f
-            docker run --name $cname -p 443:443 -d ${{ env.image }}
+            docker run --name $cname -p 443:443 -v /ssl:/ssl -d ${{ env.image }}
             unset cname
           host: ${{ secrets.SHH_HOST }}
           username: ${{ secrets.SHH_USERNAME }}
           port: 22
-          privateKey: ${{ secrets.SHH_PASSWARD}}
+          password: ${{ secrets.SHH_PASSWARD}}
+          # privateKey: ${{ secrets.SHH_PASSWARD}}
