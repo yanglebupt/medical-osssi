@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "osssi",
+  base: "/osssi",
   assetsInclude: ["**/*.xlsx", "**/*.onnx"],
   plugins: [
     react(),
