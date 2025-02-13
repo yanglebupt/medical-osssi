@@ -23,7 +23,7 @@ const display_post_headers = {
   "Basic Information": ['height', 'weight'],
   "Comorbidity": ['copd', 'pad', 'pn', 'radio', 'arrhy'],
   "Surgical Information": ['time.surg', 'class.surg.t1', 'asa'],
-  "Postoperative Laboratory Values": ['alb.post', 'wbc.post', 'alt.post', 'hb.post'],
+  "Postoperative Laboratory Values": ['alb.post', 'wbc.post', 'hb.post', 'scr.post', 'alt.post'],
 };
 
 
