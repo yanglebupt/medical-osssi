@@ -19,14 +19,6 @@ export function tensor2array(tensor: ort.Tensor) {
   return array;
 }
 
-export function convertDictNumber(datas: Array<Record<string, string>>) {
-  return datas.map((data) => {
-    const newData: Record<string, number> = {};
-    Object.keys(data).forEach((k) => (newData[k] = parseFloat(data[k])));
-    return newData;
-  });
-}
-
 export const method_mapping: Record<string, string> = {
   "rf": "Random forest", 
   "xgb": "XGBoost"
@@ -38,8 +30,8 @@ const modelpath_mapping = import.meta.glob("./models/**/*.onnx", {
   import: "default",
 }) as Record<string, string>;
 
-export function is_empty(form:Record<string, string>, h:string){
-  return !(h in form) || form[h] === "" || form[h] === "-1"
+export function is_empty(form:Record<string, number>, h:string){
+  return !(h in form) || form[h] === -1 || isNaN(form[h]) 
 }
 
 export async function predict(
