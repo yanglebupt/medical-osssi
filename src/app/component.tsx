@@ -64,10 +64,9 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
           1,
           used_headers.length,
         ], (message, progress)=>{
-          setProgress(`${message}-${(progress*100).toFixed(0)}%`)
+          setProgress(`${message} ${(progress*100).toFixed(0)}%`)
         }).then((results) => {
           setError("")
-          console.log(results)
           setProbas(results);
           setLoading(false);
           pre_setCheckeds.forEach(setChecked=>setChecked(false));
@@ -86,7 +85,7 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
   return (
     <>
       <h3 className={styles["title"]}>
-        <img src={`${import.meta.env.VITE_BASE}/logo.png`} alt="logo" className={styles["logo"]}/>
+        <img src={`${import.meta.env.VITE_BASE}logo.png`} alt="logo" className={styles["logo"]}/>
         <span>Predictive Tool of Organ/Space Surgical Site Infection</span>
       </h3>
       <div className={styles["content"]}>

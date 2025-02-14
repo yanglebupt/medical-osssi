@@ -1,4 +1,5 @@
 import * as ort from "onnxruntime-web";
+ort.env.wasm.wasmPaths = import.meta.env.VITE_BASE
 
 export function range(start:number, end:number) {
   const array: number[] = [];
@@ -73,7 +74,7 @@ export async function predict(
           );
           probs_list.push(probs as number[])
           calc_count += 1
-          progress && progress(model_path, calc_count/total_calc_count)
+          progress && progress(model_path.split("/").pop()!, calc_count/total_calc_count)
         }
       } catch (error) {
         reject(error)
