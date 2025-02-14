@@ -168,12 +168,11 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
                     </Fragment>
                   })}
                 </div>
-                <div>
+                <div className={styles["btn-con"]}>
                   <button className={styles["btn"]} onClick={submit}>
                     Risk of Infection
                   </button>
-                  <span>
-                    {checked && emptyHeaders.length > 0 ? (
+                  {checked && emptyHeaders.length > 0 ? (
                       <span className={styles["warn"]}>
                         Please fill in the valid values within the red border before clicking on the prediction
                       </span>
@@ -182,8 +181,8 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
                         <i className={styles["loading"]}></i>
                         <span>{progress}</span>
                       </>
-                    ) : null}
-                  </span>
+                    ) : 
+                  null}
                 </div>
                 {
                   !loading && (error != "" || probas.length>0) &&
