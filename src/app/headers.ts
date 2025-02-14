@@ -86,6 +86,13 @@ export const category_select_type: Record<string, Array<string>> = {
   "select": ["pn", "class.surg.t1", "aa"],
 }
 
+export function compute_form(form: Record<string, number>) {
+  form["bmi"] = form["weight"] / (form["height"] * form["height"])
+  form["alt.((post-pre)/pre)"] = (form["alt.post"] - form["alt.pre"]) / form["alt.pre"] 
+  form["scr.((post-pre)/pre)"] = (form["scr.post"] - form["scr.pre"]) / form["scr.pre"] 
+  return form;
+}
+
 export function get_category_select_type(header: string) {
   for (let i = 0, sts = Object.keys(category_select_type), n = sts.length; i < n; i++) {
     if(category_select_type[sts[i]].includes(header)) return sts[i] 
@@ -111,12 +118,19 @@ function is_header_in_headers(h:string, headers: Record<string, string[]>){
   return false
 }
 
-export function filter_empty_in_headers(headers: Record<string, string[]>, form: Record<string, number>){
-  let no_empty_headers: string[] = []
+export function filter_empty_in_headers(headers: Record<string, string[]>, form: Record<string, number> | Array<Record<string, number>>, excludes?: string[]){
+  const forms: Array<Record<string, number>> = Array.isArray(form) ? form : [form]
+  let empty_headers: string[] = []
   for (let i = 0, hss = Object.values(headers), n = hss.length; i < n; i++) {
-    no_empty_headers = no_empty_headers.concat(hss[i].filter((h) => is_empty(form, h)))
+    empty_headers = empty_headers.concat(hss[i].filter((h) => {
+      if (excludes?.includes(h)) return false
+      for (const f of forms) {
+        if(!is_empty(f, h)) return false
+      }
+      return true
+    }))
   }
-  return no_empty_headers
+  return empty_headers
 }
 
 export function filter_display_headers(idx: number, headers: Record<string, string[]>){

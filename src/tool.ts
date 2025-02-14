@@ -1,5 +1,12 @@
 import * as ort from "onnxruntime-web";
 
+export function range(start:number, end:number) {
+  const array: number[] = [];
+  for (let i = start; i < end; i++) {
+    array.push(i);
+  }
+  return array;
+}
 
 export async function requestBuffer(filename: string) {
   const res = await fetch(filename);
@@ -20,7 +27,6 @@ export function tensor2array(tensor: ort.Tensor) {
 }
 
 export const method_mapping: Record<string, string> = {
-  "rf": "Random forest", 
   "xgb": "XGBoost"
 }
 const cvs = 10
@@ -43,10 +49,8 @@ export async function predict(
 ){
   const [feature_nums, features] = dims;
   const feature_list = datas.map((record: any) => {
-    // throw new Error(`${k} header is not in input datas`);
     return usedHeaders.map((k) => is_empty(record, k) ? undefined : record[k]);
   });
-  console.log(feature_list);
   const featuresF32 = new Float32Array(feature_list.flat());
   let calc_count = 0
 
@@ -56,7 +60,6 @@ export async function predict(
       try {
         for (let cv_index = 0; cv_index < cvs; cv_index++) {
           const model_path = modelpath_mapping[`./models/${method}/${name}-cv${cv_index}.onnx`]
-          console.log(model_path)
           const session = await ort.InferenceSession.create(model_path);
           const model_ipt = {
             [session.inputNames[0]]: new ort.Tensor("float32", featuresF32, [

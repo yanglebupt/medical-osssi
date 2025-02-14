@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import cs from "classnames";
-import { header_mapping, get_options_by_header, numerical_headers, display_usedHeaders_list, filter_display_headers, get_category_select_type, filter_empty_in_headers, numerical_units, optional_features } from "./headers";
-import { predict, method_mapping, mean_std } from "../tool";
+import { header_mapping, get_options_by_header, numerical_headers, display_usedHeaders_list, filter_display_headers, get_category_select_type, filter_empty_in_headers, numerical_units, optional_features, compute_form } from "./headers";
+import { predict, method_mapping, mean_std, range } from "../tool";
 import { side_infos } from "./infomations";
 
 const wheel_scroll_events = ["wheel", "mousewheel", "DOMMouseScroll"]
@@ -28,29 +28,38 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
       })
     }
   })
-  const states = display_usedHeaders_list.map(({name, headers, used_headers})=>{
-    const [checked, setChecked] = useState(false);
+
+  const states = range(0, display_usedHeaders_list.length).map(()=>{
     const [form, setForm] = useState<Record<string, number>>({});
-
-    const emptyHeaders = useMemo(
-      () => filter_empty_in_headers(headers, form),
-      [form]
-    );
-
+    const [checked, setChecked] = useState(false);
     const [probas, setProbas] = useState<{
-        method: string;
-        probs_list: Array<Array<number>>;
+      method: string;
+      probs_list: Array<Array<number>>;
     }[]>([]);
     const [error, setError] = useState("")
     const [progress, setProgress] = useState("")
     const [loading, setLoading] = useState(false);
+    return {form, setForm, checked, setChecked, probas, setProbas, error, setError, progress, setProgress, loading, setLoading};
+  })
 
-    const submit = useCallback(() => {
+  const actions = display_usedHeaders_list.map(({name, headers, used_headers}, idx)=>{
+    const pre_forms = range(0, idx+1).map(i=>states[i].form);
+    const pre_setCheckeds = range(0, idx+1).map(i=>states[i].setChecked);
+    const {loading, setLoading, setProgress, setError, setProbas} = states[idx];
+
+    const emptyHeaders = useMemo(
+      () => filter_empty_in_headers(headers, pre_forms, optional_features),
+      pre_forms
+    );
+
+    const submit = useCallback(()=>{
       if (loading) return;
-      setChecked(true);
+      pre_setCheckeds.forEach(setChecked=>setChecked(true));
       if (emptyHeaders.length === 0) {
         setLoading(true);
         setProgress("")
+        // merge pre_forms
+        const form = compute_form(pre_forms.reduce((pre, form)=> ({...pre, ...form}), {}))
         predict([form], used_headers, name, [
           1,
           used_headers.length,
@@ -61,17 +70,17 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
           console.log(results)
           setProbas(results);
           setLoading(false);
-          setChecked(false);
+          pre_setCheckeds.forEach(setChecked=>setChecked(false));
         }).catch((error: Error)=>{
           setError(error.message);
           setProbas([]);
           setLoading(false);
-          setChecked(false);
+          pre_setCheckeds.forEach(setChecked=>setChecked(false));
         });
       }
-    }, [emptyHeaders, form, loading]);
+    }, [loading, ...pre_forms])
 
-    return {checked, form, emptyHeaders, submit, error, probas, progress, loading, setForm}
+    return {emptyHeaders, submit}
   })
 
   return (
@@ -85,7 +94,8 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
           {
             display_usedHeaders_list.map(({name, title, headers: ori_headers}, idx) => {
               const headers = filter_display_headers(idx, ori_headers)
-              const {checked, form, emptyHeaders, submit, error, probas, progress, loading, setForm} = states[idx]
+              const {emptyHeaders, submit} = actions[idx]
+              const {form, setForm, checked, error, probas, progress, loading} = states[idx]
               return <div className={styles["header-containers"]} key={name}>
                 <h4 className={styles["title"]}>{title}</h4>
                 <div className={styles["one-headers"]}>
@@ -161,7 +171,7 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
                 </div>
                 <div>
                   <button className={styles["btn"]} onClick={submit}>
-                    Predict Risk of Infection
+                    Risk of Infection
                   </button>
                   <span>
                     {checked && emptyHeaders.length > 0 ? (
@@ -177,7 +187,7 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
                   </span>
                 </div>
                 {
-                  !loading &&
+                  !loading && (error != "" || probas.length>0) &&
                   <div className={styles["results"]}>
                     {error == "" ?
                       probas.map(({method, probs_list})=>
@@ -185,7 +195,7 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
                           <span className={styles["method"]}>{method_mapping[method]}：</span>
                           <span className={styles["result"]}>{mean_std(probs_list.map(nums=>nums[0])).join("±")}</span>
                         </div>
-                      ):<div className={styles["warn"]}>{error}</div>
+                      ) : <div className={styles["warn"]}>{error}</div>
                     }
                   </div>
                 }
