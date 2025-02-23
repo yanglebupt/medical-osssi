@@ -1,7 +1,16 @@
 {
     "headers": [
         {
-            "source": "/(.*).gz",
+            "source": "/(.*)\\.gz",
+            "headers": [
+                {
+                    "key": "Content-Encoding",
+                    "value": "gzip"
+                }
+            ]
+        },
+        {
+            "source": "/assets/(.*)\\.gz",
             "headers": [
                 {
                     "key": "Content-Encoding",
