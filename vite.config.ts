@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from "vite";
+import viteCompression from 'vite-plugin-compression'
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import react from "@vitejs/plugin-react";
 
@@ -13,10 +14,15 @@ export default ({mode}) => {
       viteStaticCopy({
         targets: [
           {
-            src: "node_modules/onnxruntime-web/dist/*.wasm",
+            src: "node_modules/onnxruntime-web/dist/wasm-opts/*.wasm",
             dest: ".",
           },
         ],
+      }),
+      viteCompression({
+        filter: /.(js|mjs|json|css|html|wasm|onnx)$/i,
+        threshold: 100*1024, // 100 KB
+        deleteOriginFile: true
       }),
     ],
   });
