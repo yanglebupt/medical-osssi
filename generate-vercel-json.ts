@@ -43,73 +43,62 @@ const ContentTypeMap = {
 }
 const MustGZExs = ["wasm", "onnx"]
 
-export default () => {
-	let outDir;
-	return {
-		name: 'generate-vercel-json',
-		enforce: 'post',
-		apply: 'build',
-		configResolved(config) {
-			outDir = config.build.outDir
-		},
-		buildEnd() {
-			const vercelJson: { rewrites: Array<{source: string, destination: string}>, 
-													headers: Array<{source: string, headers: Array<{key: string, value: string}>}>
-												} = {
-				rewrites: [],
-				headers: [],
-			}
-			MustGZExs.forEach((ex)=>{
-				vercelJson.rewrites.push({
-					source: `/(.*)\\.${ex}`,
-					destination: `/$1\\.${ex}.gz`
-				})
-				vercelJson.headers.push({
-					source: `/(.*)\\.${ex}`,
-					headers: [
-						{
-							key: "Content-Type",
-							value: ContentTypeMap[ex]
-						},
-						{
-							key: "Content-Encoding",
-							value: "gzip"
-						},
-						{
-							key: "vary",
-							value: "Accept-Encoding"
-						}
-					]
-				})
-			})
-			findGzFiles(outDir).forEach(gzFile => {
-				const relGZFile = gzFile.split('.gz')[0].split(outDir)[1].replaceAll("\\", "/")
-				const ext = extname(relGZFile).toLowerCase().slice(1)
-				if (!(ext=="onnx" || ext=="wasm")) {
-					vercelJson.rewrites.push({
-						source: relGZFile,
-						destination: relGZFile + ".gz"
-					})
-					vercelJson.headers.push({
-						source: relGZFile,
-						headers: [
-							{
-								key: "Content-Type",
-								value: ContentTypeMap[ext]
-							},
-							{
-								key: "Content-Encoding",
-								value: "gzip"
-							},
-							{
-								key: "vary",
-								value: "Accept-Encoding"
-							}
-						]
-					})
+export function generateVercelJson (outDir: string) {
+const vercelJson: { rewrites: Array<{source: string, destination: string}>, 
+										headers: Array<{source: string, headers: Array<{key: string, value: string}>}>
+									} = {
+		rewrites: [],
+		headers: [],
+	}
+	MustGZExs.forEach((ex)=>{
+		vercelJson.rewrites.push({
+			source: `/(.*)\\.${ex}`,
+			destination: `/$1\\.${ex}.gz`
+		})
+		vercelJson.headers.push({
+			source: `/(.*)\\.${ex}`,
+			headers: [
+				{
+					key: "Content-Type",
+					value: ContentTypeMap[ex]
+				},
+				{
+					key: "Content-Encoding",
+					value: "gzip"
+				},
+				{
+					key: "vary",
+					value: "Accept-Encoding"
 				}
+			]
+		})
+	})
+	findGzFiles(outDir).forEach(gzFile => {
+		const relGZFile = gzFile.split('.gz')[0].split(outDir)[1].replaceAll("\\", "/")
+		const ext = extname(relGZFile).toLowerCase().slice(1)
+		if (!(ext=="onnx" || ext=="wasm")) {
+			vercelJson.rewrites.push({
+				source: relGZFile,
+				destination: relGZFile + ".gz"
 			})
-			writeJSONFile(vercelJson, join(__dirname, "vercel.json"))
-		},
-	} as Plugin
+			vercelJson.headers.push({
+				source: relGZFile,
+				headers: [
+					{
+						key: "Content-Type",
+						value: ContentTypeMap[ext]
+					},
+					{
+						key: "Content-Encoding",
+						value: "gzip"
+					},
+					{
+						key: "vary",
+						value: "Accept-Encoding"
+					}
+				]
+			})
+		}
+	})
+	writeJSONFile(vercelJson, join(__dirname, "vercel.json"))
 }
