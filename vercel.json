@@ -14,6 +14,10 @@
             "source": "/assets/component-R-D-5Stz.js",
             "headers": [
                 {
+                    "key": "Content-Type",
+                    "value": "application/javascript"
+                },
+                {
                     "key": "Content-Encoding",
                     "value": "gzip"
                 },
@@ -27,31 +31,9 @@
             "source": "/assets/index-CZFdME4S.js",
             "headers": [
                 {
-                    "key": "Content-Encoding",
-                    "value": "gzip"
+                    "key": "Content-Type",
+                    "value": "application/javascript"
                 },
-                {
-                    "key": "vary",
-                    "value": "Accept-Encoding"
-                }
-            ]
-        },
-        {
-            "source": "/(.*)\\.wasm",
-            "headers": [
-                {
-                    "key": "Content-Encoding",
-                    "value": "gzip"
-                },
-                {
-                    "key": "vary",
-                    "value": "Accept-Encoding"
-                }
-            ]
-        },
-        {
-            "source": "/assets/(.*)\\.onnx",
-            "headers": [
                 {
                     "key": "Content-Encoding",
                     "value": "gzip"
