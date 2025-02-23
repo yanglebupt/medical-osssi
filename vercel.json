@@ -1,4 +1,10 @@
 {
+    "rewrites": [
+        {
+            "source": "/assets/component-R-D-5Stz.js",
+            "destination": "/assets/component-R-D-5Stz.js.gz"
+        }
+    ],
     "headers": [
         {
             "source": "/assets/component-R-D-5Stz.js",
