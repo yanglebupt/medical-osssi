@@ -1,0 +1,90 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)\\.wasm",
+      "destination": "/$1\\.wasm.gz"
+    },
+    {
+      "source": "/(.*)\\.onnx",
+      "destination": "/$1\\.onnx.gz"
+    },
+    {
+      "source": "/assets/component-R-D-5Stz.js",
+      "destination": "/assets/component-R-D-5Stz.js.gz"
+    },
+    {
+      "source": "/assets/index-CZFdME4S.js",
+      "destination": "/assets/index-CZFdME4S.js.gz"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\\.wasm",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/wasm"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/component-R-D-5Stz.js",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/index-CZFdME4S.js",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    }
+  ]
+}
