@@ -3,6 +3,10 @@
         {
             "source": "/assets/component-R-D-5Stz.js",
             "destination": "/assets/component-R-D-5Stz.js.gz"
+        },
+        {
+            "source": "/assets/index-CZFdME4S.js",
+            "destination": "/assets/index-CZFdME4S.js.gz"
         }
     ],
     "headers": [
