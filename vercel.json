@@ -1,12 +1,124 @@
 {
   "rewrites": [
     {
-      "source": "/:path(\\.wasm$)",
-      "destination": "/:path.gz"
+      "source": "/assets/1-cv0-PPsfaeYr.onnx",
+      "destination": "/assets/1-cv0-PPsfaeYr.onnx.gz"
     },
     {
-      "source": "/assets/:path(\\.onnx$)",
-      "destination": "/assets/:path.gz"
+      "source": "/assets/1-cv1-m-dfmmGw.onnx",
+      "destination": "/assets/1-cv1-m-dfmmGw.onnx.gz"
+    },
+    {
+      "source": "/assets/1-cv2-CIYDHkZU.onnx",
+      "destination": "/assets/1-cv2-CIYDHkZU.onnx.gz"
+    },
+    {
+      "source": "/assets/1-cv3-Dqu3YJQY.onnx",
+      "destination": "/assets/1-cv3-Dqu3YJQY.onnx.gz"
+    },
+    {
+      "source": "/assets/1-cv4-DxV2lYrM.onnx",
+      "destination": "/assets/1-cv4-DxV2lYrM.onnx.gz"
+    },
+    {
+      "source": "/assets/1-cv5-Bn1Tai0k.onnx",
+      "destination": "/assets/1-cv5-Bn1Tai0k.onnx.gz"
+    },
+    {
+      "source": "/assets/1-cv6-CfuOC_-J.onnx",
+      "destination": "/assets/1-cv6-CfuOC_-J.onnx.gz"
+    },
+    {
+      "source": "/assets/1-cv7-CWFCGyO8.onnx",
+      "destination": "/assets/1-cv7-CWFCGyO8.onnx.gz"
+    },
+    {
+      "source": "/assets/1-cv8-7KlcELKc.onnx",
+      "destination": "/assets/1-cv8-7KlcELKc.onnx.gz"
+    },
+    {
+      "source": "/assets/1-cv9-BO5qTORW.onnx",
+      "destination": "/assets/1-cv9-BO5qTORW.onnx.gz"
+    },
+    {
+      "source": "/assets/2-cv0-BNCa_4xY.onnx",
+      "destination": "/assets/2-cv0-BNCa_4xY.onnx.gz"
+    },
+    {
+      "source": "/assets/2-cv1-BEvmBLQZ.onnx",
+      "destination": "/assets/2-cv1-BEvmBLQZ.onnx.gz"
+    },
+    {
+      "source": "/assets/2-cv2-Bo4laWIf.onnx",
+      "destination": "/assets/2-cv2-Bo4laWIf.onnx.gz"
+    },
+    {
+      "source": "/assets/2-cv3-C2hbn89I.onnx",
+      "destination": "/assets/2-cv3-C2hbn89I.onnx.gz"
+    },
+    {
+      "source": "/assets/2-cv4-CR_Ts5KT.onnx",
+      "destination": "/assets/2-cv4-CR_Ts5KT.onnx.gz"
+    },
+    {
+      "source": "/assets/2-cv5-BZ7F1UIt.onnx",
+      "destination": "/assets/2-cv5-BZ7F1UIt.onnx.gz"
+    },
+    {
+      "source": "/assets/2-cv6-nIvsSPW5.onnx",
+      "destination": "/assets/2-cv6-nIvsSPW5.onnx.gz"
+    },
+    {
+      "source": "/assets/2-cv7-DXfGzMTZ.onnx",
+      "destination": "/assets/2-cv7-DXfGzMTZ.onnx.gz"
+    },
+    {
+      "source": "/assets/2-cv8-CQF-DDoV.onnx",
+      "destination": "/assets/2-cv8-CQF-DDoV.onnx.gz"
+    },
+    {
+      "source": "/assets/2-cv9-B_pGJ_3U.onnx",
+      "destination": "/assets/2-cv9-B_pGJ_3U.onnx.gz"
+    },
+    {
+      "source": "/assets/3-cv0-EIGqg2SF.onnx",
+      "destination": "/assets/3-cv0-EIGqg2SF.onnx.gz"
+    },
+    {
+      "source": "/assets/3-cv1-Dk2CKLRS.onnx",
+      "destination": "/assets/3-cv1-Dk2CKLRS.onnx.gz"
+    },
+    {
+      "source": "/assets/3-cv2-DrlXHI-U.onnx",
+      "destination": "/assets/3-cv2-DrlXHI-U.onnx.gz"
+    },
+    {
+      "source": "/assets/3-cv3-D_5JPYWn.onnx",
+      "destination": "/assets/3-cv3-D_5JPYWn.onnx.gz"
+    },
+    {
+      "source": "/assets/3-cv4-BnAayl_r.onnx",
+      "destination": "/assets/3-cv4-BnAayl_r.onnx.gz"
+    },
+    {
+      "source": "/assets/3-cv5-BkaXlYXq.onnx",
+      "destination": "/assets/3-cv5-BkaXlYXq.onnx.gz"
+    },
+    {
+      "source": "/assets/3-cv6-COlEpacr.onnx",
+      "destination": "/assets/3-cv6-COlEpacr.onnx.gz"
+    },
+    {
+      "source": "/assets/3-cv7-9h_atDQs.onnx",
+      "destination": "/assets/3-cv7-9h_atDQs.onnx.gz"
+    },
+    {
+      "source": "/assets/3-cv8-CjFWfg2_.onnx",
+      "destination": "/assets/3-cv8-CjFWfg2_.onnx.gz"
+    },
+    {
+      "source": "/assets/3-cv9-CeTnNGwE.onnx",
+      "destination": "/assets/3-cv9-CeTnNGwE.onnx.gz"
     },
     {
       "source": "/assets/component-R-D-5Stz.js",
@@ -15,15 +127,43 @@
     {
       "source": "/assets/index-CZFdME4S.js",
       "destination": "/assets/index-CZFdME4S.js.gz"
+    },
+    {
+      "source": "/ort-training-wasm-simd.wasm",
+      "destination": "/ort-training-wasm-simd.wasm.gz"
+    },
+    {
+      "source": "/ort-wasm-simd-threaded.jsep.wasm",
+      "destination": "/ort-wasm-simd-threaded.jsep.wasm.gz"
+    },
+    {
+      "source": "/ort-wasm-simd-threaded.wasm",
+      "destination": "/ort-wasm-simd-threaded.wasm.gz"
+    },
+    {
+      "source": "/ort-wasm-simd.jsep.wasm",
+      "destination": "/ort-wasm-simd.jsep.wasm.gz"
+    },
+    {
+      "source": "/ort-wasm-simd.wasm",
+      "destination": "/ort-wasm-simd.wasm.gz"
+    },
+    {
+      "source": "/ort-wasm-threaded.wasm",
+      "destination": "/ort-wasm-threaded.wasm.gz"
+    },
+    {
+      "source": "/ort-wasm.wasm",
+      "destination": "/ort-wasm.wasm.gz"
     }
   ],
   "headers": [
     {
-      "source": "/(.*)\\.wasm",
+      "source": "/assets/1-cv0-PPsfaeYr.onnx",
       "headers": [
         {
           "key": "Content-Type",
-          "value": "application/wasm"
+          "value": "application/octet-stream"
         },
         {
           "key": "Content-Encoding",
@@ -36,7 +176,483 @@
       ]
     },
     {
-      "source": "/(.*)\\.onnx",
+      "source": "/assets/1-cv1-m-dfmmGw.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/1-cv2-CIYDHkZU.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/1-cv3-Dqu3YJQY.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/1-cv4-DxV2lYrM.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/1-cv5-Bn1Tai0k.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/1-cv6-CfuOC_-J.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/1-cv7-CWFCGyO8.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/1-cv8-7KlcELKc.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/1-cv9-BO5qTORW.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/2-cv0-BNCa_4xY.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/2-cv1-BEvmBLQZ.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/2-cv2-Bo4laWIf.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/2-cv3-C2hbn89I.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/2-cv4-CR_Ts5KT.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/2-cv5-BZ7F1UIt.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/2-cv6-nIvsSPW5.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/2-cv7-DXfGzMTZ.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/2-cv8-CQF-DDoV.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/2-cv9-B_pGJ_3U.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/3-cv0-EIGqg2SF.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/3-cv1-Dk2CKLRS.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/3-cv2-DrlXHI-U.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/3-cv3-D_5JPYWn.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/3-cv4-BnAayl_r.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/3-cv5-BkaXlYXq.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/3-cv6-COlEpacr.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/3-cv7-9h_atDQs.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/3-cv8-CjFWfg2_.onnx",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/assets/3-cv9-CeTnNGwE.onnx",
       "headers": [
         {
           "key": "Content-Type",
@@ -75,6 +691,125 @@
         {
           "key": "Content-Type",
           "value": "application/javascript"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/ort-training-wasm-simd.wasm",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/wasm"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/ort-wasm-simd-threaded.jsep.wasm",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/wasm"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/ort-wasm-simd-threaded.wasm",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/wasm"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/ort-wasm-simd.jsep.wasm",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/wasm"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/ort-wasm-simd.wasm",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/wasm"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/ort-wasm-threaded.wasm",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/wasm"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/ort-wasm.wasm",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/wasm"
         },
         {
           "key": "Content-Encoding",
