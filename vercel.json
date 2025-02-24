@@ -9,12 +9,12 @@
       "destination": "/assets/:path.gz"
     },
     {
-      "source": "/assets/component-DLwai_uU.js",
-      "destination": "/assets/component-DLwai_uU.js.gz"
+      "source": "/assets/component-C_M5YN76.js",
+      "destination": "/assets/component-C_M5YN76.js.gz"
     },
     {
-      "source": "/assets/index-xlY21ZxS.js",
-      "destination": "/assets/index-xlY21ZxS.js.gz"
+      "source": "/assets/index-cCGGFMg1.js",
+      "destination": "/assets/index-cCGGFMg1.js.gz"
     }
   ],
   "headers": [
@@ -53,7 +53,7 @@
       ]
     },
     {
-      "source": "/assets/component-DLwai_uU.js",
+      "source": "/assets/component-C_M5YN76.js",
       "headers": [
         {
           "key": "Content-Type",
@@ -70,7 +70,7 @@
       ]
     },
     {
-      "source": "/assets/index-xlY21ZxS.js",
+      "source": "/assets/index-cCGGFMg1.js",
       "headers": [
         {
           "key": "Content-Type",
