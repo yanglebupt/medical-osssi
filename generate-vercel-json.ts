@@ -52,7 +52,7 @@ const vercelJson: { rewrites: Array<{source: string, destination: string}>,
 	}
 	MustGZExs.forEach(({ex, prefix})=>{
 		vercelJson.rewrites.push({
-			source: `${prefix}:path(\\.${ex}$)`,
+			source: `${prefix}:path(.*\\.${ex}$)`,
 			destination: `${prefix}:path.gz`
 		})
 		vercelJson.headers.push({

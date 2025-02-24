@@ -5,7 +5,7 @@
       "destination": "/:path.gz"
     },
     {
-      "source": "/assets/:path(\\.onnx$)",
+      "source": "/assets/:path(.*\\.onnx$)",
       "destination": "/assets/:path.gz"
     },
     {
@@ -19,7 +19,7 @@
   ],
   "headers": [
     {
-      "source": "/ort-wasm.wasm",
+      "source": "/(.*\\.wasm$)",
       "headers": [
         {
           "key": "Content-Type",
