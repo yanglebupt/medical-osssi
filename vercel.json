@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/:path(\\.wasm$)",
-      "destination": "/:path.gz"
+      "source": "/ort-wasm.wasm",
+      "destination": "/ort-wasm.wasm.gz"
     },
     {
       "source": "/assets/:path(\\.onnx$)",
