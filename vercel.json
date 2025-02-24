@@ -19,7 +19,7 @@
   ],
   "headers": [
     {
-      "source": "/(.*\\.wasm$)",
+      "source": "/ort-wasm.wasm",
       "headers": [
         {
           "key": "Content-Type",
