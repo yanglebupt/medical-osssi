@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import App from "./App";
 
+console.log(import.meta.env.MODE)
+
 ReactDOM.createRoot(document.getElementById("app")!).render(
   <React.StrictMode>
     <App />
