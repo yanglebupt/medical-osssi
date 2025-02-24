@@ -41,7 +41,7 @@ const ContentTypeMap = {
 	onnx: "application/octet-stream",
 	wasm: "application/wasm",
 }
-const MustGZExs = []
+const MustGZExs = [{ex: "wasm", prefix: "/"}, {ex: "onnx", prefix: "/assets/"}]
 
 export function generateVercelJson (outDir: string) {
 const vercelJson: { rewrites: Array<{source: string, destination: string}>, 

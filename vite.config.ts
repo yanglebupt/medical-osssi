@@ -12,6 +12,7 @@ export default ({mode}) => {
     viteStaticCopy({
       targets: [
         {
+          // vercel 无法识别 wasm-opt 压缩后的 wasm 文件成 application/wasm
           src: `node_modules/onnxruntime-web/dist/${mode == "production" ? "wasm-opts/" : ""}*.wasm`,
           dest: ".",
         },
