@@ -1,7 +1,6 @@
 import { defineConfig, loadEnv, Plugin, PluginOption } from "vite";
 import viteCompression from 'vite-plugin-compression'
 import { viteStaticCopy } from "vite-plugin-static-copy";
-import { generateVercelJson } from "./generate-vercel-json";
 import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
