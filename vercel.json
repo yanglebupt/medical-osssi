@@ -9,12 +9,12 @@
       "destination": "/assets/:path.gz"
     },
     {
-      "source": "/assets/component-C_M5YN76.js",
-      "destination": "/assets/component-C_M5YN76.js.gz"
+      "source": "/assets/component-C3r_BavK.js",
+      "destination": "/assets/component-C3r_BavK.js.gz"
     },
     {
-      "source": "/assets/index-cCGGFMg1.js",
-      "destination": "/assets/index-cCGGFMg1.js.gz"
+      "source": "/assets/index-CQkElmuV.js",
+      "destination": "/assets/index-CQkElmuV.js.gz"
     }
   ],
   "headers": [
@@ -53,7 +53,7 @@
       ]
     },
     {
-      "source": "/assets/component-C_M5YN76.js",
+      "source": "/assets/component-C3r_BavK.js",
       "headers": [
         {
           "key": "Content-Type",
@@ -70,7 +70,7 @@
       ]
     },
     {
-      "source": "/assets/index-cCGGFMg1.js",
+      "source": "/assets/index-CQkElmuV.js",
       "headers": [
         {
           "key": "Content-Type",
