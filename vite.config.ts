@@ -11,7 +11,7 @@ export default ({mode}) => {
     viteStaticCopy({
       targets: [
         {
-          src: "node_modules/onnxruntime-web/dist/wasm-opts/*.wasm",
+          src: "node_modules/onnxruntime-web/dist/*.wasm",
           dest: ".",
         },
       ],
