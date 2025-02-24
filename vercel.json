@@ -19,7 +19,7 @@
   ],
   "headers": [
     {
-      "source": "/(.*)\\.wasm",
+      "source": "/(.*\\.wasm$)",
       "headers": [
         {
           "key": "Content-Type",
@@ -36,7 +36,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.onnx",
+      "source": "/(.*\\.onnx$)",
       "headers": [
         {
           "key": "Content-Type",

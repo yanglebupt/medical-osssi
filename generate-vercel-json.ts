@@ -56,7 +56,7 @@ const vercelJson: { rewrites: Array<{source: string, destination: string}>,
 			destination: `${prefix}:path.gz`
 		})
 		vercelJson.headers.push({
-			source: `/(.*)\\.${ex}`,
+			source: `/(.*\\.${ex}$)`,
 			headers: [
 				{
 					key: "Content-Type",
