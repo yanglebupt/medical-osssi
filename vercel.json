@@ -1,15 +1,6 @@
 {
   "headers": [
     {
-      "source": "/(.*)\\.wasm",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/wasm"
-        }
-      ]
-    },
-    {
       "source": "/ort-wasm.wasm",
       "headers": [
         {
