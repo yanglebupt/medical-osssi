@@ -1,12 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)\\.wasm",
-      "destination": "/$1\\.wasm.gz"
+      "source": "/:path(\\.wasm)",
+      "destination": "/:path.gz"
     },
     {
-      "source": "/(.*)\\.onnx",
-      "destination": "/$1\\.onnx.gz"
+      "source": "/assets/:path(\\.onnx)",
+      "destination": "/assets/:path.gz"
     },
     {
       "source": "/assets/component-R-D-5Stz.js",
