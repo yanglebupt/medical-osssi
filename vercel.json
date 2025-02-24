@@ -1,11 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/:path(\\.wasm)",
+      "source": "/:path(\\.wasm$)",
       "destination": "/:path.gz"
     },
     {
-      "source": "/assets/:path(\\.onnx)",
+      "source": "/assets/:path(\\.onnx$)",
       "destination": "/assets/:path.gz"
     },
     {
