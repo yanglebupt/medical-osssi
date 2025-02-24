@@ -19,7 +19,7 @@ export default ({mode}) => {
     })
   ]
 
-  if (mode == "production") 
+  if (mode == "production")
     plugins.push(viteCompression({
       filter: /.(js|mjs|json|css|html|wasm|onnx)$/i,
       threshold: 100*1024, // 100 KB
