@@ -5,12 +5,12 @@ import { is_empty } from "../tool";
 // 术前变量
 const display_pre_headers = {
   "Basic Information": ['height', 'weight'],
-  "Comorbidity": ['copd', 'pad', 'pn', 'radio', 'rf', 'arrhy'],
+  "Comorbidity": ['copd', 'pad', 'pn', 'radio', 'arrhy'],
   "Surgical Information": ['time.surg', 'class.surg.t1', 'asa'],
 };
 // 术中变量
 const display_mid_headers = {
-  "$": ['rbc', 'stoma', 'bleed', 'plasma', 'aa', 'sbp_lower'],
+  "$": ['stoma', 'bleed', 'plasma', 'aa', 'sbp_lower'],
   "Basic Information": ['height', 'weight'],
   "Comorbidity": ['copd', 'pad', 'pn', 'radio', 'arrhy'],
   "Surgical Information": ['time.surg', 'class.surg.t1', 'asa'],
@@ -18,29 +18,29 @@ const display_mid_headers = {
 // 术后变量
 const display_post_headers = {
   "$": ['icu'],
-  "Intraoperative Predictors": ['stoma', 'bleed', 'plasma', 'aa', 'sbp_lower', 'hr_lower'],
-  "Preoperative Laboratory Values": ['scr.pre', 'alt.pre'],
+  "Intraoperative Predictors": ['stoma', 'bleed', 'plasma', 'aa', 'sbp_lower'],
   "Basic Information": ['height', 'weight'],
   "Comorbidity": ['copd', 'pad', 'pn', 'radio', 'arrhy'],
   "Surgical Information": ['time.surg', 'class.surg.t1', 'asa'],
   "Postoperative Laboratory Values": ['alb.post', 'wbc.post', 'hb.post', 'scr.post', 'alt.post'],
+  "Preoperative Laboratory Values": ['scr.pre', 'alt.pre'],
 };
 
 
 const pre_headers = [
-    'time.surg', 'bmi', 'copd', 'pad', 'pn', 'class.surg.t1',
-    'asa', 'radio', 'rf', 'arrhy'
+  'time.surg', 'bmi', 'copd', 'pad', 'pn', 'class.surg.t1',
+  'asa', 'radio', 'arrhy'
 ]
 const mid_headers = [
-    'time.surg', 'bmi', 'copd', 'pad', 'pn', 'class.surg.t1',
-    'asa', 'radio', 'arrhy', 'rbc', 'stoma', 'bleed',
-    'plasma', 'aa', 'sbp_lower'
+  'time.surg', 'bmi', 'copd', 'pad', 'pn', 'class.surg.t1',
+  'asa', 'radio', 'arrhy', 'stoma', 'bleed',
+  'plasma', 'aa', 'sbp_lower'
 ]
 const post_headers = [
-    'time.surg', 'bmi', 'copd', 'pad', 'pn', 'class.surg.t1',
-    'asa', 'radio', 'arrhy', 'stoma', 'bleed',
-    'plasma', 'aa', 'sbp_lower', 'hr_lower', 'icu', 'alb.post', 'wbc.post', 'alt.((post-pre)/pre)',
-    'scr.((post-pre)/pre)', 'hb.post'
+  'time.surg', 'bmi', 'copd', 'pad', 'pn', 'class.surg.t1',
+  'asa', 'radio', 'arrhy', 'stoma', 'bleed',
+  'plasma', 'aa', 'sbp_lower', 'icu', 'alb.post', 'wbc.post', 'hb.post', 
+  'alt.((post-pre)/pre)', 'scr.((post-pre)/pre)'
 ]
 
 // 可选特征
