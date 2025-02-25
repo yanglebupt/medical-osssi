@@ -1,4 +1,3 @@
-import { Plugin } from 'vite'
 import { readdirSync, statSync, createWriteStream } from "fs"
 import { join, extname } from "path"
 
@@ -40,6 +39,9 @@ const ContentTypeMap = {
 	html: "text/html",
 	onnx: "application/octet-stream",
 	wasm: "application/wasm",
+	png: "image/png",
+	jpg: "image/jpeg",
+	jpeg: "image/jpeg",
 }
 const MustGZExs = [{ex: "wasm", prefix: "/"}, {ex: "onnx", prefix: "/assets/"}]
 

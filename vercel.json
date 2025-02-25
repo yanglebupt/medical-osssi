@@ -94,7 +94,8 @@
       "source": "/logo.png",
       "headers": [
         {
-          "key": "Content-Type"
+          "key": "Content-Type",
+          "value": "image/png"
         },
         {
           "key": "Content-Encoding",
