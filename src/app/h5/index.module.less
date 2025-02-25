@@ -61,6 +61,7 @@
             justify-content: left;
             flex-direction: row-reverse;
             justify-items: center;
+            align-items: center;
             margin: 2vw 0;
             &.empty {
               .ipt {
@@ -83,14 +84,13 @@
               flex: 1;
               border-radius: 1vw;
               align-self: center;
-              box-sizing: content-box;
               outline: none;
-              border: 0.1vw solid black;
+              border: 0.2vw solid black;
               color: black;
-              height: 5vw;
+              height: 6.5vw;
               margin: 0 3vw;
               width: 20vw;
-              padding-left: 0.6vw;
+              box-sizing: border-box;
               &:focus, &:hover {
                 border-color: #b95915;
                 color: #b95915;
@@ -99,11 +99,50 @@
                 }
               }
             }
-            .opts {
-              height: 6.5vw;
-              width: 50vw;
-              padding-left: 0;
+
+            input[type="number"] {
+              padding-left: 1.5vw;
             }
+
+            .opts-con {
+              margin: 0 3vw;
+              vertical-align: middle;
+              position: relative;
+              &:focus, &:hover {
+                &~label{
+                  color: #b95915;
+                }
+                &::after {
+                  border-color: #b95915;
+                }
+              }
+              &::after {
+                position: absolute;
+                content: "";
+                right: 1.5vw;
+                top: calc(50% - 0.75vw);
+                width: 1.5vw;
+                height: 1.5vw;
+                transform: rotate(-45deg) translateY(-50%);
+                border-left: 0.35vw #858585 solid;
+                border-bottom: 0.35vw #858585 solid;
+              }
+            }
+
+            .opts {
+              margin: 0;
+              height: 7vw;
+              width: 50vw;
+              padding-left: 1.2vw;
+              padding-right: 5vw;
+              font-size: 3.5vw;
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              -ms-appearance: none;
+              appearance: none;
+              vertical-align: middle;
+            }
+
             .radios {
               border: none;
               background-color: white;
@@ -112,7 +151,21 @@
               width: auto !important;
               vertical-align:super;
               input {
+                width: 4vw;
+                height: 4vw;
                 margin: 0 1vw 0 2vw;
+                vertical-align: middle;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                -ms-appearance: none;
+                appearance: none;
+                border-radius: 50%;
+                border: 0.3vw #555 solid;
+                position: relative;
+                transition: 0.2s border ease-in;
+                &:checked {
+                  border: 1.5vw rgb(34, 152, 255) solid;
+                }
                 &:first-child {
                   margin-left: 0;
                 }
@@ -120,6 +173,7 @@
               label {
                 padding-left: 1vw;
                 margin-right: 2vw;
+                vertical-align: middle;
                 &:last-child {
                   margin-right: 0;
                 }
@@ -149,6 +203,10 @@
           cursor: pointer;
           margin-right: 3vw;
           margin-bottom: 3vw;
+          font-size: inherit;
+          white-space: nowrap; 
+          overflow: hidden; 
+          text-overflow: ellipsis; 
           &:hover {
             background-color: rgb(0, 237, 99);
           }
@@ -191,7 +249,6 @@
   
   .right-side {
     .item {
-      margin-bottom: 1vw;
       .title {
         color: white;
         background-color: green;
@@ -200,6 +257,7 @@
       }
       .text {
         border: 0.5vw solid rgb(133, 191, 138);
+        border-bottom: none;
         color: #555;
         background-color: #f4f4f4;
         padding: 2vw;

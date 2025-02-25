@@ -22,7 +22,7 @@ export default ({mode}) => {
 
   if (mode == "production" || mode == "pre-production")
     plugins.push(viteCompression({
-      filter: /.(js|mjs|json|css|html|wasm|onnx)$/i,
+      filter: /.(js|mjs|json|css|html|wasm|onnx|png|jpg|jpeg)$/i,
       threshold: 100*1024, // 100 KB
       deleteOriginFile: true,
       success: mode == "pre-production" ? () => generateVercelJson("dist") : undefined

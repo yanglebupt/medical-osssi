@@ -126,7 +126,7 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
                               value={(form[h] ?? NaN) + ""}
                             />
                           : (get_category_select_type(h)=="select" ? 
-                              <select 
+                              <div className={styles["opts-con"]}><select 
                                 id={h} 
                                 className={cs(styles["ipt"], styles["opts"], (form[h]??-1) == -1 ? styles["opts-not-selected"] : "")} 
                                 onChange={({target})=>{
@@ -142,7 +142,7 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
                                   get_options_by_header(h)
                                     .map(((op, idx)=>!!op?<option className={styles["opt"]} value={idx} key={op}>{op}</option>:null))
                                 }
-                              </select> :
+                              </select></div> :
                               <button id={h} className={cs(styles["ipt"], styles["radios"])}>
                                 {
                                   get_options_by_header(h)

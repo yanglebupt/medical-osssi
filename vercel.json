@@ -9,12 +9,16 @@
       "destination": "/assets/:path.gz"
     },
     {
-      "source": "/assets/component-C3r_BavK.js",
-      "destination": "/assets/component-C3r_BavK.js.gz"
+      "source": "/assets/component-6kjfAVvW.js",
+      "destination": "/assets/component-6kjfAVvW.js.gz"
     },
     {
-      "source": "/assets/index-CQkElmuV.js",
-      "destination": "/assets/index-CQkElmuV.js.gz"
+      "source": "/assets/index-Ds3d3qPX.js",
+      "destination": "/assets/index-Ds3d3qPX.js.gz"
+    },
+    {
+      "source": "/logo.png",
+      "destination": "/logo.png.gz"
     }
   ],
   "headers": [
@@ -53,7 +57,7 @@
       ]
     },
     {
-      "source": "/assets/component-C3r_BavK.js",
+      "source": "/assets/component-6kjfAVvW.js",
       "headers": [
         {
           "key": "Content-Type",
@@ -70,11 +74,27 @@
       ]
     },
     {
-      "source": "/assets/index-CQkElmuV.js",
+      "source": "/assets/index-Ds3d3qPX.js",
       "headers": [
         {
           "key": "Content-Type",
           "value": "application/javascript"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/logo.png",
+      "headers": [
+        {
+          "key": "Content-Type"
         },
         {
           "key": "Content-Encoding",
