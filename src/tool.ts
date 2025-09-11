@@ -1,4 +1,5 @@
 import * as ort from "onnxruntime-web";
+import { string_headers } from "./app/headers";
 ort.env.wasm.wasmPaths = import.meta.env.VITE_BASE
 
 export function range(start:number, end:number) {
@@ -37,8 +38,9 @@ const modelpath_mapping = import.meta.glob("./models/**/*.onnx", {
   import: "default",
 }) as Record<string, string>;
 
-export function is_empty(form:Record<string, number>, h:string){
-  return !(h in form) || form[h] === -1 || isNaN(form[h]) 
+export function is_empty(form:Record<string, number>, h:string) {
+  const v = form[h]
+  return v === undefined || (string_headers.includes(h) ? v === "" :  (v === -1 || isNaN(v)))
 }
 
 export async function predict(

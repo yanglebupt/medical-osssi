@@ -74,6 +74,11 @@
                 -webkit-appearance: none;
               }
             }
+            input[type="radio"] {
+              &:checked + label {
+                font-weight: bold;
+              }
+            }
             .unit {
               margin-right: 4vw;
               &~.ipt {
@@ -91,12 +96,21 @@
               margin: 0 3vw;
               width: 20vw;
               box-sizing: border-box;
+              font-weight: bold;
               &:focus, &:hover {
                 border-color: #b95915;
                 color: #b95915;
                 &~label{
                   color: #b95915;
                 }
+              }
+
+              &.text {
+                padding-top: 0;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-radius: 0;
               }
             }
 
@@ -150,6 +164,7 @@
               text-align: left;
               width: auto !important;
               vertical-align:super;
+              font-weight: normal;
               input {
                 width: 4vw;
                 height: 4vw;

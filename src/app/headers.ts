@@ -4,13 +4,14 @@ import { is_empty } from "../tool";
 
 // 术前变量
 const display_pre_headers = {
-  "Basic Information": ['height', 'weight'],
+  "Basic Information": ['name', 'height', 'weight'],
   "Comorbidity": ['copd', 'pad', 'pn', 'radio', 'arrhy'],
   "Surgical Information": ['time.surg', 'class.surg.t1', 'asa'],
+  "Preoperative Laboratory Values": ['scr.pre', 'alt.pre'],
 };
 // 术中变量
 const display_mid_headers = {
-  "$": ['stoma', 'bleed', 'plasma', 'aa', 'sbp_lower'],
+  "$": ['stoma', 'pan', 'bleed', 'plasma', 'aa', 'sbp_lower'],
   "Basic Information": ['height', 'weight'],
   "Comorbidity": ['copd', 'pad', 'pn', 'radio', 'arrhy'],
   "Surgical Information": ['time.surg', 'class.surg.t1', 'asa'],
@@ -23,7 +24,6 @@ const display_post_headers = {
   "Comorbidity": ['copd', 'pad', 'pn', 'radio', 'arrhy'],
   "Surgical Information": ['time.surg', 'class.surg.t1', 'asa'],
   "Postoperative Laboratory Values": ['alb.post', 'wbc.post', 'hb.post', 'scr.post', 'alt.post'],
-  "Preoperative Laboratory Values": ['scr.pre', 'alt.pre'],
 };
 
 
@@ -50,18 +50,23 @@ export const optional_features: Array<string> = [
 
 // 数值特征
 export const numerical_headers: Array<string> = [
-  "age","time.surg","height","weight","bmi","plasma","rbc","bleed",
+  "name", "age","time.surg","height","weight","bmi","plasma","rbc","bleed",
   "hr_lower","hr_upper","sbp_lower","sbp_upper","dbp_lower","dbp_upper",
   "plt.pre","plt.post","hb.pre","hb.post","alb.pre",
   "alb.post","tbil.pre","tbil.post","wbc.pre","wbc.post",
   "alt.pre","alt.post","scr.pre","scr.post"
 ]
 
+// 字符特征
+export const string_headers: Array<string> = [
+  "name"
+]
+
 // 选项特征
 export const category_headers: Array<string> = [
   "sex", "smoke","hp","dm","chd","arrhy","copd","pad",
   "rf","chemo","radio","pn","asa","icu","los.icu",
-  "stoma","class.surg.t1","aa"
+  "stoma","class.surg.t1","aa","pan"
 ]
 
 // 特征选项
@@ -69,8 +74,14 @@ export const category_options: Record<string, Array<string>> = {
   "sex": ["Male", "Female"],
   "pn":["No","One day before surgery","More than one day before surgery"],
   "asa":["","I","II","III","IV"],
-  "class.surg.t1":["Upper gastrointestinal tract","Lower gastrointestinal tract","Pancreaticoduodenectomy","Pancreatic body and tail resection surgery"],
-  "aa":["Manual fasten","Medical instrument fasten","Medical instrument plus manual fasten","Mixture fasten","Medical machine fasten"],
+  "class.surg.t1":["Upper gastrointestinal tract","Lower gastrointestinal tract","Pancreaticoduodenectomy"],
+  "aa": [
+    "Open",
+    "Minimally invasive-instrument anastomosis",
+    "Minimally invasive-instrument anastomosis & manual reinforcement",
+    "Laparoscopic pancreaticoduodenectomy",
+    "Robotic pancreaticoduodenectomy"
+  ]
 }
 
 // 数值单位
@@ -148,6 +159,7 @@ export function filter_display_headers(idx: number, headers: Record<string, stri
 }
 
 export const header_mapping: Record<string, string> = {
+  "name": "Name",
   "time.surg": "Year of surgery",
   "age": "Age",
   "height": "Height",
@@ -155,6 +167,7 @@ export const header_mapping: Record<string, string> = {
   "bmi": "BMI",
   "sex": "Sex",
   "smoke": "Smoke",
+  "pan": "Prophylactic Antibiotics",
   "hp": "Hypertension",
   "dm": "Diabetes mellitus",
   "chd": "Coronary heart disease",
@@ -199,10 +212,10 @@ export const header_mapping: Record<string, string> = {
   "plt.post":"Postoperative Plt",
   "hr_lower": "TWA(HR < 45 bpm)",
   "hr_upper": "TWA(HR > 100 bpm)",
-  "sbp_lower": "TWA(SBp < 90 mmHg)",
-  "sbp_upper": "TWA(SBp > 160 mmHg)",
-  "dbp_lower": "TWA(DBp < 50 mmHg)",
-  "dbp_upper": "TWA(DBp > 100 mmHg)",
+  "sbp_lower": "TWA(SBP < 90 mmHg)",
+  "sbp_upper": "TWA(SBP > 160 mmHg)",
+  "dbp_lower": "TWA(DBP < 50 mmHg)",
+  "dbp_upper": "TWA(DBP > 100 mmHg)",
   'alb.(post-pre)': "Postoperative ΔAlb", 
   'wbc.(post-pre)': "Postoperative ΔWBC", 
   'alt.(post-pre)': "Postoperative ΔAlt", 

@@ -79,6 +79,11 @@
                 -webkit-appearance: none;
               }
             }
+            input[type="radio"] {
+              &:checked + label {
+                font-weight: bold;
+              }
+            }
             .unit {
               margin-right: 30px;
               &~.ipt {
@@ -97,12 +102,21 @@
               margin: 0 30px 0 10px;
               width: 100px;
               padding-left: 5px;
+              font-weight: bold;
               &:focus, &:hover {
                 border-color: #b95915;
                 color: #b95915;
                 &~label{
                   color: #b95915;
                 }
+              }
+
+              &.text {
+                padding-top: 0;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-radius: 0;
               }
             }
             .opts {
@@ -117,6 +131,7 @@
               text-align: left;
               padding: 0;
               width: auto !important;
+              font-weight: normal;
               label {
                 padding-left: 5px;
                 margin-right: 10px;

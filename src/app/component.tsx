@@ -1,6 +1,6 @@
 import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import cs from "classnames";
-import { header_mapping, get_options_by_header, numerical_headers, display_usedHeaders_list, filter_display_headers, get_category_select_type, filter_empty_in_headers, numerical_units, optional_features, compute_form } from "./headers";
+import { header_mapping, get_options_by_header, numerical_headers, string_headers, display_usedHeaders_list, filter_display_headers, get_category_select_type, filter_empty_in_headers, numerical_units, optional_features, compute_form } from "./headers";
 import { predict, method_mapping, mean_std, range } from "../tool";
 import { side_infos } from "./infomations";
 
@@ -95,6 +95,27 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
               const headers = filter_display_headers(idx, ori_headers)
               const {emptyHeaders, submit} = actions[idx]
               const {form, setForm, checked, error, probas, progress, loading} = states[idx]
+              const getInput = (h: string) => {
+                const isString = string_headers.includes(h);
+                return (<input
+                          className={cs(
+                            styles["ipt"],
+                            isString && styles["text"]
+                          )}
+                          id={h}
+                          type={isString ? "text" : "number"}
+                          autoComplete="off"
+                          onChange={({ target }: any) => {
+                            setForm({
+                              ...form,
+                              [h]: isString ? 
+                              (target as HTMLInputElement).value.trim(): 
+                              (target as HTMLInputElement).valueAsNumber,
+                            });
+                          }}
+                          value={(form[h] ?? (isString ? "" : NaN)) + ""}
+                      />)
+              }
               return <div className={styles["header-containers"]} key={name}>
                 <h4 className={styles["title"]}>{title}</h4>
                 <div className={styles["one-headers"]}>
@@ -111,21 +132,8 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
                         >
                           {optional_features.includes(h) && <i className={styles["unit"]}>(Optional)</i>}
                           {numerical_units[h] && <span className={styles["unit"]}>{numerical_units[h]}</span>}
-                          {numerical_headers.includes(h) ?
-                            <input
-                              className={styles["ipt"]}
-                              id={h}
-                              type="number"
-                              autoComplete="off"
-                              onChange={({ target }: any) => {
-                                setForm({
-                                  ...form,
-                                  [h]: (target as HTMLInputElement).valueAsNumber,
-                                });
-                              }}
-                              value={(form[h] ?? NaN) + ""}
-                            />
-                          : (get_category_select_type(h)=="select" ? 
+                          {numerical_headers.includes(h) ? getInput(h) :
+                          (get_category_select_type(h)=="select" ? 
                               <div className={styles["opts-con"]}><select 
                                 id={h} 
                                 className={cs(styles["ipt"], styles["opts"], (form[h]??-1) == -1 ? styles["opts-not-selected"] : "")} 
