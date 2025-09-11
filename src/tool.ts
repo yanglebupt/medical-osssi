@@ -39,7 +39,7 @@ const modelpath_mapping = import.meta.glob("./models/**/*.onnx", {
 }) as Record<string, string>;
 
 export function is_empty(form:Record<string, number>, h:string) {
-  const v = form[h]
+  const v = form[h] as any
   return v === undefined || (string_headers.includes(h) ? v === "" :  (v === -1 || isNaN(v)))
 }
 

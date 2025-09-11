@@ -111,7 +111,7 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
                               [h]: isString ? 
                               (target as HTMLInputElement).value.trim(): 
                               (target as HTMLInputElement).valueAsNumber,
-                            });
+                            } as any);
                           }}
                           value={(form[h] ?? (isString ? "" : NaN)) + ""}
                       />)
