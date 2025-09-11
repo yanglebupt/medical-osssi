@@ -3,15 +3,22 @@
 Predictive Tool of Organ/Space Surgical Site Infection
 </h1>
 
+# Linked
+- Production: https://sonatatech.cn/osssi
+- Pre-Production: https://osssi.vercel.app
+- Development: https://osssi-dev.vercel.app
+
 This repo developed by `onnxruntime-web` and `react`, you can clone this repo and run locally. `node` must be installed in your local computer.
 
 # Run or Build
 
-- Before Run or Build, you must install dependencies by `npm i` command.
+- Before Run or Build, you must install dependencies by `npm i`.
 
-- And Run by `npm run dev` command.
+- And Run by `npm run dev`.
 
-- And Build by `npm run build` command.
+- And Build by `npm run build`.
+
+**Pre-Production or Development** must run `npm run pre-build` to update `vercel.json`, and then add、commit、push.
 
 ## Models
 

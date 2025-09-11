@@ -9,12 +9,12 @@
       "destination": "/assets/:path.gz"
     },
     {
-      "source": "/assets/component-6kjfAVvW.js",
-      "destination": "/assets/component-6kjfAVvW.js.gz"
+      "source": "/assets/component-CNDbDkWB.js",
+      "destination": "/assets/component-CNDbDkWB.js.gz"
     },
     {
-      "source": "/assets/index-Ds3d3qPX.js",
-      "destination": "/assets/index-Ds3d3qPX.js.gz"
+      "source": "/assets/index-y0TWj-LN.js",
+      "destination": "/assets/index-y0TWj-LN.js.gz"
     },
     {
       "source": "/logo.png",
@@ -57,7 +57,7 @@
       ]
     },
     {
-      "source": "/assets/component-6kjfAVvW.js",
+      "source": "/assets/component-CNDbDkWB.js",
       "headers": [
         {
           "key": "Content-Type",
@@ -74,7 +74,7 @@
       ]
     },
     {
-      "source": "/assets/index-Ds3d3qPX.js",
+      "source": "/assets/index-y0TWj-LN.js",
       "headers": [
         {
           "key": "Content-Type",
