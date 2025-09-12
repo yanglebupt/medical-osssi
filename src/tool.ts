@@ -1,5 +1,5 @@
 import * as ort from "onnxruntime-web";
-import { string_headers } from "./app/headers";
+import { decomposeHeader, string_headers } from "./app/headers";
 ort.env.wasm.wasmPaths = import.meta.env.VITE_BASE
 
 export function range(start:number, end:number) {
@@ -38,7 +38,9 @@ const modelpath_mapping = import.meta.glob("./models/**/*.onnx", {
   import: "default",
 }) as Record<string, string>;
 
-export function is_empty(form:Record<string, number>, h:string) {
+export function is_empty(form:Record<string, number>, dh:string) {
+  const [h, isShow] = decomposeHeader(form, dh);
+  if (!isShow) return false
   const v = form[h] as any
   return v === undefined || (string_headers.includes(h) ? v === "" :  (v === -1 || isNaN(v)))
 }

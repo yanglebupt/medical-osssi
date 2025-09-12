@@ -1,6 +1,6 @@
 import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import cs from "classnames";
-import { header_mapping, get_options_by_header, numerical_headers, string_headers, display_usedHeaders_list, filter_display_headers, get_category_select_type, filter_empty_in_headers, numerical_units, optional_features, compute_form } from "./headers";
+import { header_mapping, get_options_by_header, numerical_headers, string_headers, display_usedHeaders_list, filter_display_headers, get_category_select_type, filter_empty_in_headers, numerical_units, optional_features, compute_form, decomposeHeader } from "./headers";
 import { predict, method_mapping, mean_std, range } from "../tool";
 import { side_infos } from "./infomations";
 
@@ -123,11 +123,13 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
                     return <Fragment key={k}>
                       {k!="$" && <div className={styles["header-type"]}>{k}</div>}
                       <div className={styles["headers"]}>
-                        {headers[k].map(h=><div
+                        {headers[k].map(dh=>{
+                        const [h, isShow] = decomposeHeader(form, dh);  
+                        return isShow ? <div
                           key={h}
                           className={cs(
                             styles["header-row"],
-                            emptyHeaders.includes(h) && checked ? styles["empty"] : ""
+                            emptyHeaders.includes(dh) && checked ? styles["empty"] : ""
                           )}
                         >
                           {optional_features.includes(h) && <i className={styles["unit"]}>(Optional)</i>}
@@ -171,7 +173,7 @@ export const AppWithStyles = ({ styles }: { styles: CSSModuleClasses }) => {
                               </button>
                           )}
                           <label htmlFor={h} className={styles["hname"]}>{header_mapping[h]}</label>
-                        </div>)}
+                        </div>: null})}
                       </div>
                     </Fragment>
                   })}

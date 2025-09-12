@@ -2,16 +2,27 @@
 
 import { is_empty } from "../tool";
 
+// 解析自定义联动 header
+export function decomposeHeader(form:Record<string, number>, dh: string) {
+  const [h, dep] = dh.split(":");
+  let isShow = true;
+  if (dep) {
+    const [depName, depValue] = dep.split("-") as any[];
+    isShow = (form[depName] == depValue);
+  }
+  return [h, isShow] as const;
+}
+
 // 术前变量
 const display_pre_headers = {
-  "Basic Information": ['name', 'height', 'weight'],
+  "Basic Information": ['height', 'weight'],
   "Comorbidity": ['copd', 'pad', 'pn', 'radio', 'arrhy'],
   "Surgical Information": ['time.surg', 'class.surg.t1', 'asa'],
   "Preoperative Laboratory Values": ['scr.pre', 'alt.pre'],
 };
 // 术中变量
 const display_mid_headers = {
-  "$": ['stoma', 'pan', 'bleed', 'plasma', 'aa', 'sbp_lower'],
+  "$": ['stoma', 'pan', 'name:pan-1','bleed', 'plasma', 'aa', 'sbp_lower'],
   "Basic Information": ['height', 'weight'],
   "Comorbidity": ['copd', 'pad', 'pn', 'radio', 'arrhy'],
   "Surgical Information": ['time.surg', 'class.surg.t1', 'asa'],
@@ -131,14 +142,12 @@ function is_header_in_headers(h:string, headers: Record<string, string[]>){
 
 export function filter_empty_in_headers(headers: Record<string, string[]>, form: Record<string, number> | Array<Record<string, number>>, excludes?: string[]){
   const forms: Array<Record<string, number>> = Array.isArray(form) ? form : [form]
+  const mergedForm = forms.reduce((pre, form)=> ({...pre, ...form}), {});
   let empty_headers: string[] = []
   for (let i = 0, hss = Object.values(headers), n = hss.length; i < n; i++) {
     empty_headers = empty_headers.concat(hss[i].filter((h) => {
       if (excludes?.includes(h)) return false
-      for (const f of forms) {
-        if(!is_empty(f, h)) return false
-      }
-      return true
+      return is_empty(mergedForm, h);
     }))
   }
   return empty_headers

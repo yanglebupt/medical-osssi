@@ -68,11 +68,19 @@
             flex-direction: row-reverse;
             justify-items: center;
             margin: 10px 0;
+            &:has(input[id=name]) {
+              margin-left: -20px;
+            }
             &.empty {
               .ipt {
                 border: 2px solid red;
               }
             }
+            
+            input[id=name] {
+              width: 120px;
+            }
+
             input[type="number"] {
               &::-webkit-outer-spin-button,
               &::-webkit-inner-spin-button {
